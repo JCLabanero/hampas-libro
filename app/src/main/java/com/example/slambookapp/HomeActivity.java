@@ -1,5 +1,6 @@
 package com.example.slambookapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -52,6 +55,32 @@ public class HomeActivity extends AppCompatActivity {
                 recyclerAdapter.notifyItemInserted(0);
                 layoutManager.scrollToPosition(0);
                 Toast.makeText(context, "new slam added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+//                        AlertDialog.Builder(context);
+                alertBuilder.setTitle("Warning!")
+                        .setMessage("Confirm delete?")
+                        .setCancelable(true)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                contentList.remove(position);
+                                recyclerAdapter.notifyItemRemoved(position);
+                                layoutManager.scrollToPosition(position);
+                                Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {}
+                        });
+                AlertDialog warning = alertBuilder.create();
+                warning.show();
             }
         });
     }

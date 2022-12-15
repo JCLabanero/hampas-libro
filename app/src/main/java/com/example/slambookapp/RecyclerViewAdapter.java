@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     int layout;
     ArrayList<Content> contentList;
+    OnItemLongClickListener customListener;
 
     public RecyclerViewAdapter(Context context, int layout, ArrayList<Content> contentList) {
         this.context = context;
@@ -45,6 +47,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return contentList.size();
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClick(int position);
+    }
+
+    public void setCustomOnItemClickListener(OnItemLongClickListener listenerFromActivity) {
+        customListener = listenerFromActivity;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
@@ -54,6 +64,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.image = convertView.findViewById(R.id.row_slam_image);
             this.name = convertView.findViewById(R.id.row_slam_name);
             this.answer = convertView.findViewById(R.id.row_slam_answer);
+
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(customListener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            customListener.onItemLongClick(position);
+//                            Toast.makeText(context, "You hold"+getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    return true;
+                }
+            });
+
         }
     }
 }
