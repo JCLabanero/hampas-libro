@@ -38,13 +38,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*        buttonLogin.setOnClickListener(tapListener);*/
     }
-    /*    View.OnClickListener tapListener = new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-    Intent i = new Intent(context, HomeActivity.class);
-    startActivity(i);
-    }
-    };*/
 }

@@ -2,10 +2,13 @@ package com.example.slambookapp;
 
 public class Content {
     private int image;
-    private String title;
-    private String details;
+    private String answer;
+    private String name;
 
-    public Content(int image, String title, String details){
+    public Content(Integer image, String answer, String name){
+        this.image = image;
+        this.answer = answer;
+        this.name = name;
     }
 
     public int getImage() {
@@ -16,19 +19,19 @@ public class Content {
         this.image = image;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
-    public String getDetails() {
-        return details;
+    public String getName() {
+        return name;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setName(String name) {
+        this.name = name;
     }
 }
