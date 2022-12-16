@@ -1,11 +1,11 @@
 package com.example.slambookapp;
 
-public class Content {
+public class ContentAnswers {
     private int image;
     private String answer;
     private String name;
 
-    public Content(Integer image, String answer, String name){
+    public ContentAnswers(Integer image, String answer, String name){
         this.image = image;
         this.answer = answer;
         this.name = name;
