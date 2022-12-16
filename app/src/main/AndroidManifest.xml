@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SlamBookApp"
         tools:targetApi="31">
         <activity
-            android:name=".AnswerSlamActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +16,13 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Context context;
     int layout;
-    ArrayList<ContentAnswers> contentAnswersList;
+    ArrayList<Content> contentList;
     OnItemLongClickListener customListener;
 
-    public RecyclerViewAdapter(Context context, int layout, ArrayList<ContentAnswers> contentAnswersList) {
+    public RecyclerViewAdapter(Context context, int layout, ArrayList<Content> contentList) {
         this.context = context;
         this.layout = layout;
-        this.contentAnswersList = contentAnswersList;
+        this.contentList = contentList;
     }
 
     @NonNull
@@ -35,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        ContentAnswers oneLine = contentAnswersList.get(position);
+        Content oneLine = contentList.get(position);
         viewHolder.image.setImageResource(oneLine.getImage());
         viewHolder.answer.setText(oneLine.getAnswer());
         viewHolder.name.setText(oneLine.getName());
@@ -43,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return contentAnswersList.size();
+        return contentList.size();
     }
 
     public interface OnItemLongClickListener {
