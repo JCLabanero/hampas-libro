@@ -6,28 +6,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapterForAnswers extends RecyclerView.Adapter<RecyclerViewAdapterForAnswers.ViewHolder> {
     Context context;
     int layout;
-    ArrayList<Content> contentList;
+    ArrayList<ContentAnswers> contentAnswersList;
     OnItemLongClickListener customListener;
 
-    public RecyclerViewAdapter(Context context, int layout, ArrayList<Content> contentList) {
+    public RecyclerViewAdapterForAnswers(Context context, int layout, ArrayList<ContentAnswers> contentAnswersList) {
         this.context = context;
         this.layout = layout;
-        this.contentList = contentList;
+        this.contentAnswersList = contentAnswersList;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewAdapterForAnswers.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View convertView = inflater.inflate(layout,parent,false);
         ViewHolder viewHolder = new ViewHolder(convertView);
@@ -36,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Content oneLine = contentList.get(position);
+        ContentAnswers oneLine = contentAnswersList.get(position);
         viewHolder.image.setImageResource(oneLine.getImage());
         viewHolder.answer.setText(oneLine.getAnswer());
         viewHolder.name.setText(oneLine.getName());
@@ -44,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return contentList.size();
+        return contentAnswersList.size();
     }
 
     public interface OnItemLongClickListener {
