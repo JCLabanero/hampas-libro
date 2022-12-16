@@ -15,10 +15,10 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Context context;
     int layout;
-    ArrayList<ContentAnswers> contentAnswersList;
+    ArrayList<Content> contentAnswersList;
     OnItemLongClickListener customListener;
 
-    public RecyclerViewAdapter(Context context, int layout, ArrayList<ContentAnswers> contentAnswersList) {
+    public RecyclerViewAdapter(Context context, int layout, ArrayList<Content> contentAnswersList) {
         this.context = context;
         this.layout = layout;
         this.contentAnswersList = contentAnswersList;
@@ -35,7 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        ContentAnswers oneLine = contentAnswersList.get(position);
+        ContentAnswers oneLine = (ContentAnswers) contentAnswersList.get(position);
         viewHolder.image.setImageResource(oneLine.getImage());
         viewHolder.answer.setText(oneLine.getAnswer());
         viewHolder.name.setText(oneLine.getName());
@@ -58,6 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView image;
         TextView name;
         TextView answer;
+
         public ViewHolder(@NonNull View convertView) {
             super(convertView);
             this.image = convertView.findViewById(R.id.row_slam_image);

@@ -66,7 +66,7 @@ public class AnswerSlamActivity extends AppCompatActivity {
 
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(int position) {
+            public void onItemLongClick(int position) {/*
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
                 alertBuilder.setTitle("Warning!")
                         .setMessage("Confirm delete "+ contentAnswersList.get(position).getName()+"s' answer")
@@ -85,7 +85,7 @@ public class AnswerSlamActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {}
                         });
                 AlertDialog warning = alertBuilder.create();
-                warning.show();
+                warning.show();*/
             }
         });
     }

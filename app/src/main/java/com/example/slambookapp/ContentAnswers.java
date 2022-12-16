@@ -1,22 +1,13 @@
 package com.example.slambookapp;
 
-public class ContentAnswers {
-    private int image;
+public class ContentAnswers extends Content{
     private String answer;
     private String name;
 
     public ContentAnswers(Integer image, String answer, String name){
-        this.image = image;
+        super(image);
         this.answer = answer;
         this.name = name;
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String getAnswer() {
