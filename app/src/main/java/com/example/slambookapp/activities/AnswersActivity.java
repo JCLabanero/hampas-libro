@@ -44,7 +44,7 @@ public class AnswersActivity extends AppCompatActivity {
 //        layoutManager = new StaggeredGridLayoutManager(/*Column*/2,LinearLayoutManager.VERTICAL);
         recyclerView1.setLayoutManager(layoutManager);
 
-        recyclerAdapter = new RecyclerViewAdapterForAnswers(context, R.layout.row_slam, contentAnswersList);
+        recyclerAdapter = new RecyclerViewAdapterForAnswers(context, R.layout.row_slam_answers, contentAnswersList);
         recyclerView1.setAdapter(recyclerAdapter);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {

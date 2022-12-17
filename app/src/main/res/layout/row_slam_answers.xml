@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
-
+    android:padding="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="@color/purple_200">
     <TextView
         android:id="@+id/row_slam_answer"
         android:layout_width="wrap_content"
@@ -14,6 +17,7 @@
         android:layout_weight="1"
         android:text="my answer should be here"/>
     <LinearLayout
+        android:id="@+id/horizontal_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end">
