@@ -1,4 +1,4 @@
-package com.example.slambookapp;
+package com.example.slambookapp.viewholders;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.slambookapp.R;
+import com.example.slambookapp.classes.ContentAnswers;
 
 import java.util.ArrayList;
 

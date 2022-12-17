@@ -1,4 +1,4 @@
-package com.example.slambookapp;
+package com.example.slambookapp.classes;
 
 public class ContentAnswers {
     private int image;

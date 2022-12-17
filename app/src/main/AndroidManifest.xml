@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SlamBookApp"
         tools:targetApi="31">
         <activity
-            android:name=".AnswersActivity"
+            android:name=".activities.AnswersActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false">
 
             <meta-data

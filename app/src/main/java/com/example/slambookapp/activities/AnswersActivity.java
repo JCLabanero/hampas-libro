@@ -1,4 +1,4 @@
-package com.example.slambookapp;
+package com.example.slambookapp.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.slambookapp.R;
+import com.example.slambookapp.viewholders.RecyclerViewAdapterForAnswers;
+import com.example.slambookapp.classes.ContentAnswers;
 
 import java.util.ArrayList;
 
