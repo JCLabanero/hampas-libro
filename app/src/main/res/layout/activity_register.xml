@@ -8,30 +8,44 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="left"
-        android:text="@string/welcome"
+        android:text="@string/create_account"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/editTextEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
+        android:id="@+id/editTextFullName"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="5dp"
+        android:ems="10"
+        android:hint="@string/full_name"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+
+    <EditText
         android:id="@+id/editTextEmailAddress"
         android:layout_width="320dp"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
         android:drawablePadding="5dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/email"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextFullName" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -47,15 +61,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
 
-    <TextView
-        android:id="@+id/textForgotPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        android:drawablePadding="5dp"
         android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/password"
         android:importantForAutofill="no"
-        android:text="@string/forgot_password"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
-        app:layout_constraintHorizontal_bias="1"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
 
@@ -67,22 +83,22 @@
         android:width="320dp"
         android:height="49dp"
         android:importantForAutofill="no"
-        android:text="@string/log_in"
+        android:text="@string/sign_up"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textForgotPass"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/login_design" />
+        app:srcCompat="@drawable/register_design" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -100,14 +116,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:importantForAutofill="no"
-            android:text="@string/no_account" />
+            android:text="@string/yes_account" />
 
         <TextView
             android:id="@+id/textViewSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:importantForAutofill="no"
-            android:text="@string/sign_up" />
+            android:text="@string/log_in" />
 
         <!--            android:textAppearance="@style/primary_black"-->
         <!--            android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"/>-->
@@ -134,7 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
-            android:text="or login with" />
+            android:text="or signup with" />
 
         <View
             android:id="@+id/view2"
