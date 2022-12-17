@@ -7,16 +7,28 @@
     android:orientation="vertical"
     tools:context=".activities.AnswersActivity">
 
+    <TextView
+        android:id="@+id/textViewQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Who is your crush?"
+        android:paddingTop="8dp"
+        android:paddingHorizontal="8dp"
+        android:textSize="20dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"/>
+        android:layout_weight="8"
+        android:paddingTop="8dp"
+        android:paddingHorizontal="8dp"/>
 
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="add slam"/>
+        android:text="add answer"
+        android:layout_gravity="bottom"/>
 </LinearLayout>
