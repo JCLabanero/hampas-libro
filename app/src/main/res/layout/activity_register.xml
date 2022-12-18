@@ -24,6 +24,7 @@
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_outline_person"
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/full_name"
@@ -37,8 +38,9 @@
         android:id="@+id/editTextEmailAddress"
         android:layout_width="320dp"
         android:layout_height="48dp"
-        android:drawablePadding="5dp"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_outline_email"
+        android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/email"
         android:importantForAutofill="no"
@@ -52,6 +54,7 @@
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_outline_lock"
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/password"
@@ -65,8 +68,9 @@
         android:id="@+id/editTextConfirmPassword"
         android:layout_width="320dp"
         android:layout_height="48dp"
-        android:drawablePadding="5dp"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_outline_lock"
+        android:drawablePadding="5dp"
         android:ems="10"
         android:hint="@string/password"
         android:importantForAutofill="no"
@@ -108,7 +112,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin">
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignup">
 
         <TextView
             android:id="@+id/textViewQuestion"
