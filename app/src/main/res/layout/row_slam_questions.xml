@@ -11,6 +11,7 @@
     android:background="@color/purple_200"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/row_slam_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Who is your crush?"
@@ -27,7 +28,7 @@
             android:text="answers:"
             android:layout_marginEnd="8dp"/>
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/row_slam_image"
             android:layout_width="20dp"
             android:layout_height="20dp"
             tools:srcCompat="@tools:sample/avatars"/>

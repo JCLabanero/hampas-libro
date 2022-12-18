@@ -11,4 +11,15 @@
     <string name="create_account">Create Account</string>
     <string name="full_name">Full Name</string>
     <string name="confirm_password">Confirm Password</string>
+
+    <string-array name="questions_array">
+        <item>Who is your crush?</item>
+        <item>What is your first name?</item>
+        <item>What is your last name?</item>
+        <item>What is your middle name?</item>
+        <item>Who is your mother?</item>
+        <item>Who is your crush?</item>
+        <item>Who is your crush?</item>
+        <item>Who is your crush?</item>
+    </string-array>
 </resources>

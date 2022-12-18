@@ -45,9 +45,7 @@ public class RecyclerViewAdapterForAnswers extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public int getItemCount() {
-        return contentAnswersList.size();
-    }
+    public int getItemCount() {return contentAnswersList.size();}
 
     public interface OnItemLongClickListener {
         void onItemLongClick(int position);
