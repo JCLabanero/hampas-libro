@@ -55,11 +55,6 @@ public class RecyclerViewAdapterForAnswers extends RecyclerView.Adapter<Recycler
         customListener = listenerFromActivity;
     }
 
-    @Override // multiple views
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView text1;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +19,7 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     Context context;
     int layout;
     ArrayList<ContentQuestions> contentQuestionsList;
-    AdapterView.OnItemClickListener customListener;
+    OnItemClickListener customListener;
 
     public RecyclerViewAdapterForQuestions(Context context, int layout, ArrayList<ContentQuestions> contentQuestionsList) {
         this.context = context;
@@ -52,7 +51,7 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     }
 
     public void setCustomOnItemClickListener(OnItemClickListener listenerFromActivity){
-        customListener = (AdapterView.OnItemClickListener) listenerFromActivity;
+        customListener = listenerFromActivity;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,9 +65,11 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    if(position!=RecyclerView.NO_POSITION){
-//                        customListener.onItemClick(position);
+                    if(customListener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            customListener.onItemClick(position);
+                        }
                     }
                 }
             });

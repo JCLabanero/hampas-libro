@@ -1,5 +1,6 @@
 package com.example.slambookapp.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,18 +52,24 @@ public class QuestionActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
 
-//        recyclerAdapter = new RecyclerViewAdapterForAnswers(context,R.layout.row_slam_questions,contentQuestionsList);
+        recyclerAdapter = new RecyclerViewAdapterForQuestions(context,R.layout.row_slam_questions,contentQuestionsList);
         recyclerView.setAdapter(recyclerAdapter);
 
         buttonAddRandomQuestion = findViewById(R.id.buttonAddQuestion);
         buttonAddRandomQuestion.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                int rand = (int) (Math.random()*questions.length)+0;
+                int rand = (int) (Math.random() * questions.length);
                 contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[rand]));
                 recyclerAdapter.notifyItemInserted(0);
                 layoutManager.scrollToPosition(0);
                 Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
+            }
+        });
+        recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForQuestions.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(context, "You clicked "+position, Toast.LENGTH_SHORT).show();
             }
         });
     }
