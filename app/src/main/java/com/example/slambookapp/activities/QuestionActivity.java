@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.slambookapp.R;
 import com.example.slambookapp.classes.ContentQuestions;
-import com.example.slambookapp.viewholders.RecyclerViewAdapterForAnswers;
 import com.example.slambookapp.viewholders.RecyclerViewAdapterForQuestions;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
     public void init() {
         contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[0]));
-        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerViewQuestions);
         recyclerView.hasFixedSize();
 
         layoutManager = new LinearLayoutManager(context);

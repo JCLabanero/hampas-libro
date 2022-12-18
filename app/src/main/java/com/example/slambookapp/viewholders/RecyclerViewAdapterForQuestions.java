@@ -19,7 +19,10 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     Context context;
     int layout;
     ArrayList<ContentQuestions> contentQuestionsList;
+//<<<<<<< HEAD
     OnItemClickListener customListener;
+//=======
+//>>>>>>> parent of 9010bea (single recyclerview p.1)
 
     public RecyclerViewAdapterForQuestions(Context context, int layout, ArrayList<ContentQuestions> contentQuestionsList) {
         this.context = context;
@@ -46,6 +49,7 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     @Override
     public int getItemCount() {return contentQuestionsList.size();}
 
+//<<<<<<< HEAD
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -54,6 +58,8 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
         customListener = listenerFromActivity;
     }
 
+//=======
+//>>>>>>> parent of 9010bea (single recyclerview p.1)
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView question;
@@ -61,6 +67,7 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
             super(itemView);
             this.image = itemView.findViewById(R.id.row_slam_image);
             this.question = itemView.findViewById(R.id.row_slam_question);
+//<<<<<<< HEAD
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,6 +80,8 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
                     }
                 }
             });
+//=======
+//>>>>>>> parent of 9010bea (single recyclerview p.1)
         }
     }
 }

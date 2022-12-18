@@ -40,8 +40,8 @@ public class RecyclerViewAdapterForAnswers extends RecyclerView.Adapter<Recycler
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         ContentAnswers oneLine = contentAnswersList.get(position);
         viewHolder.image.setImageResource(oneLine.getImage());
-        viewHolder.text2.setText(oneLine.getText1());
-        viewHolder.text1.setText(oneLine.getText2());
+        viewHolder.answer.setText(oneLine.getAnswer());
+        viewHolder.name.setText(oneLine.getName());
     }
 
     @Override
@@ -57,14 +57,13 @@ public class RecyclerViewAdapterForAnswers extends RecyclerView.Adapter<Recycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView text1;
-        TextView text2;
-
+        TextView name;
+        TextView answer;
         public ViewHolder(@NonNull View convertView) {
             super(convertView);
             this.image = convertView.findViewById(R.id.row_slam_image);
-            this.text1 = convertView.findViewById(R.id.row_slam_name);
-            this.text2 = convertView.findViewById(R.id.row_slam_answer);
+            this.name = convertView.findViewById(R.id.row_slam_name);
+            this.answer = convertView.findViewById(R.id.row_slam_answer);
 
             convertView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
