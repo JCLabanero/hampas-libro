@@ -35,8 +35,8 @@ public class AnswersActivity extends AppCompatActivity {
 
     public void init() {
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Joanna Laine Pueyo","- John Carlo Labanero"));
-        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"John Carlo Labanero","- John Carlo Labanero"));
-        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Joanna Laine Pueyo","- John Carlo Labanero"));
+        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Angel Jane Labanero","- John Carlo Labanero"));
+        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Laine Pueyo","- John Carlo Labanero"));
         recyclerView1 = findViewById(R.id.recyclerView);
         recyclerView1.hasFixedSize();
         layoutManager = new LinearLayoutManager(context);
@@ -50,7 +50,7 @@ public class AnswersActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"new","new"));
+                contentAnswersList.add(0, new ContentAnswers(R.drawable.ic_launcher_foreground,"new","new"));
                 recyclerAdapter.notifyItemInserted(0);
                 layoutManager.scrollToPosition(0);
                 Toast.makeText(context, "new slam added", Toast.LENGTH_SHORT).show();
@@ -61,7 +61,6 @@ public class AnswersActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(int position) {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-//                        AlertDialog.Builder(context);
                 alertBuilder.setTitle("Warning!")
                         .setMessage("Confirm delete?")
                         .setCancelable(true)
@@ -76,7 +75,7 @@ public class AnswersActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {}
+                            public void onClick(DialogInterface dialogInterface, int i) {/*No action*/}
                         });
                 AlertDialog warning = alertBuilder.create();
                 warning.show();
