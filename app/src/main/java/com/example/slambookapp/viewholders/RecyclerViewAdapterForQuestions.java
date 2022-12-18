@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     Context context;
     int layout;
     ArrayList<ContentQuestions> contentQuestionsList;
+    AdapterView.OnItemClickListener customListener;
 
     public RecyclerViewAdapterForQuestions(Context context, int layout, ArrayList<ContentQuestions> contentQuestionsList) {
         this.context = context;
@@ -45,6 +47,14 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     @Override
     public int getItemCount() {return contentQuestionsList.size();}
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setCustomOnItemClickListener(OnItemClickListener listenerFromActivity){
+        customListener = (AdapterView.OnItemClickListener) listenerFromActivity;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView question;
@@ -52,6 +62,16 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
             super(itemView);
             this.image = itemView.findViewById(R.id.row_slam_image);
             this.question = itemView.findViewById(R.id.row_slam_question);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION){
+//                        customListener.onItemClick(position);
+                    }
+                }
+            });
         }
     }
 }

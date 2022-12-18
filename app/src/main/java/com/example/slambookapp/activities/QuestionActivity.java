@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.slambookapp.R;
 import com.example.slambookapp.classes.ContentQuestions;
+import com.example.slambookapp.viewholders.RecyclerViewAdapterForAnswers;
 import com.example.slambookapp.viewholders.RecyclerViewAdapterForQuestions;
 
 import java.util.ArrayList;
@@ -44,13 +45,13 @@ public class QuestionActivity extends AppCompatActivity {
     }
     public void init() {
         contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[0]));
-        recyclerView = findViewById(R.id.recyclerViewQuestions);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.hasFixedSize();
 
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerAdapter = new RecyclerViewAdapterForQuestions(context,R.layout.row_slam_questions,contentQuestionsList);
+//        recyclerAdapter = new RecyclerViewAdapterForAnswers(context,R.layout.row_slam_questions,contentQuestionsList);
         recyclerView.setAdapter(recyclerAdapter);
 
         buttonAddRandomQuestion = findViewById(R.id.buttonAddQuestion);
