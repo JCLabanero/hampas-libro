@@ -11,7 +11,7 @@
         android:id="@+id/textViewQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Who is your crush?"
+        android:text="hey?"
         android:paddingTop="8dp"
         android:paddingHorizontal="8dp"
         android:textSize="20dp"/>

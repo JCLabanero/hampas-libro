@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.slambookapp.R;
@@ -25,15 +27,25 @@ public class AnswersActivity extends AppCompatActivity {
     Button buttonAdd;
     Context context = this;
     ArrayList<ContentAnswers> contentAnswersList = new ArrayList<>();
+    TextView question;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answers);
         init();
+
+        Intent intent = getIntent();
+        if(intent.hasExtra("question")){
+            String questionAt = intent.getStringExtra("question");
+            question.setText(questionAt);
+        }
     }
 
     public void init() {
+
+        question = findViewById(R.id.textViewQuestion);
+
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Joanna Laine Pueyo","- John Carlo Labanero"));
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Angel Jane Labanero","- John Carlo Labanero"));
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Laine Pueyo","- John Carlo Labanero"));
@@ -46,6 +58,7 @@ public class AnswersActivity extends AppCompatActivity {
 
         recyclerAdapter = new RecyclerViewAdapterForAnswers(context, R.layout.row_slam_answers, contentAnswersList);
         recyclerView1.setAdapter(recyclerAdapter);
+
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

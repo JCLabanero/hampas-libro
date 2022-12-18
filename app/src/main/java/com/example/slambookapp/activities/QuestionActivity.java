@@ -69,7 +69,10 @@ public class QuestionActivity extends AppCompatActivity {
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForQuestions.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(context, "You clicked "+position, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "you click "+contentQuestionsList.get(position).getQuestion(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,AnswersActivity.class);
+                intent.putExtra("question", contentQuestionsList.get(position).getQuestion());
+                startActivity(intent);
             }
         });
     }
