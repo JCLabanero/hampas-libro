@@ -36,7 +36,7 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdapterForQuestions.ViewHolder holder, int position) {
         ContentQuestions oneLine = contentQuestionsList.get(position);
         holder.image.setImageResource(oneLine.getImage());
         holder.question.setText(oneLine.getQuestion());

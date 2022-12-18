@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(context, AnswersActivity.class);
+                Intent intent = new Intent(context, QuestionActivity.class);
                 startActivity(intent);
             }
         });

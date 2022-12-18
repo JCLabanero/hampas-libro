@@ -20,13 +20,13 @@
       android:layout_height="wrap_content"
       android:paddingHorizontal="8dp"
       android:paddingTop="8dp"
-      android:layout_weight="20"/>
+      android:layout_weight="10"
+      android:id="@+id/recyclerViewQuestions"/>
 
   <Button
-      android:id="@+id/button4"
+      android:id="@+id/buttonAddQuestion"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="Add question"
-      android:layout_gravity="bottom"
-      android:layout_weight="1"/>
+      android:layout_gravity="bottom"/>
 </LinearLayout>
