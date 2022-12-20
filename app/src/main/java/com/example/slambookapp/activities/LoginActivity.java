@@ -11,8 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.slambookapp.R;
+import com.example.slambookapp.database.SQLiteDBHelper;
 
 public class LoginActivity extends AppCompatActivity {
+    SQLiteDBHelper database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         EditText password = findViewById(R.id.editTextPassword);
         Button buttonLogin = findViewById(R.id.buttonLogin);
         TextView buttonSignUp = findViewById(R.id.textViewSignUp);
+
+        database = new SQLiteDBHelper(context);
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

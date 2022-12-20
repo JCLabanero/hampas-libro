@@ -12,8 +12,18 @@ public class db_contract {
         public static String USERNAME = "user_name";
         public static String PASSWORD = "user_password";
     }
-
-    public static class Post implements BaseColumns {
+    public static class Question implements BaseColumns {
+        public static String QUESTION_TABLE = "question_table";
+        public static String ID = "question_id";
+        public static String USER_ID = "user_id";
+    }
+    public static class Answer implements BaseColumns {
+        public static String ANSWER_TABLE = "answer_table";
+        public static String ID = "answer_id";
+        public static String USER_ID = "user_id";
+        public static String QUESTION_ID = "question_id";
+    }
+    /*public static class Post implements BaseColumns {
         //table
         public static String POST_TABLE = "post_table";
         //columns
@@ -21,5 +31,5 @@ public class db_contract {
         public static String TEXT = "post_text";
         public static String DATE = "post_date";
         public static String USER_ID = "user_id";
-    }
+    }*/
 }
