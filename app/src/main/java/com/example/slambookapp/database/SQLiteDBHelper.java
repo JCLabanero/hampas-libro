@@ -50,21 +50,19 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);*/
     }
 
-    public boolean insertIntoTable(String name, String username, String password){
-        SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(db_contract.User.COMPLETE_NAME, name);
-        values.put(db_contract.User.USERNAME, username);
-        values.put(db_contract.User.PASSWORD, password);
-
-
-
-        long result = sqliteDatabase.insert(db_contract.User.USER_TABLE,null, values);
-        if (result == -1) {
-
-        }
-        return true;
-    }
+//    public boolean insertIntoTable(String name, String username, String password){
+//        SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
+//
+//        ContentValues values = new ContentValues();
+//
+//        values.put(db_contract.User.COMPLETE_NAME, name);
+//        values.put(db_contract.User.USERNAME, username);
+//        values.put(db_contract.User.PASSWORD, password);
+//
+//        long result = sqliteDatabase.insert(db_contract.User.USER_TABLE,null, values);
+//        if (result == -1) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                database.close();
                 Intent intent = new Intent(context, RegisterActivity.class);
                 startActivity(intent);
             }
