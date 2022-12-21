@@ -49,13 +49,26 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                selectAndDisplayAllUser();
 //                selectAndDisplayUserByID();
-                selectAndDisplayUserByIDInEditText();
-
-                Intent intent = new Intent(context, QuestionActivity.class);
-                startActivity(intent);
+//                selectAndDisplayUserByIDInEditText();
+                checkUserIfExists();
             }
         });
 
+
+    }
+
+    private void checkUserIfExists() {
+        Cursor result = db.selectUserByUsername(username.getText().toString());
+        if (result.getCount() == 0) {
+            Toast.makeText(context, "user doesn't exist", Toast.LENGTH_SHORT).show();
+        } else {
+            while (result.moveToNext()) {
+                username.setText("");
+                password.setText("");
+                Intent intent = new Intent(context, QuestionActivity.class);
+                startActivity(intent);
+            }
+        }
 
     }
 

@@ -29,12 +29,12 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'user_name' TEXT NOT NULL," +
                 "'user_password' TEXT NOT NULL," +
                 "UNIQUE ('user_id') ON CONFLICT ABORT)";*/
-        final String CREATE_USER_TABLE = "CREATE TABLE '"+db_contract.User.USER_TABLE+"' (" +
-                "'"+db_contract.User.ID+"' INTEGER PRIMARY KEY," +
-                "'"+db_contract.User.COMPLETE_NAME+"' TEXT NOT NULL," +
-                "'"+db_contract.User.USERNAME+"' TEXT NOT NULL," +
-                "'"+db_contract.User.PASSWORD+"' TEXT NOT NULL," +
-                "UNIQUE ('"+db_contract.User.ID+"') ON CONFLICT ABORT)";
+        final String CREATE_USER_TABLE = "CREATE TABLE '"+ DB_Contract.User.USER_TABLE+"' (" +
+                "'"+ DB_Contract.User.ID+"' INTEGER PRIMARY KEY," +
+                "'"+ DB_Contract.User.COMPLETE_NAME+"' TEXT NOT NULL," +
+                "'"+ DB_Contract.User.USERNAME+"' TEXT NOT NULL," +
+                "'"+ DB_Contract.User.PASSWORD+"' TEXT NOT NULL," +
+                "UNIQUE ('"+ DB_Contract.User.ID+"') ON CONFLICT ABORT)";
         try {
             sqLiteDatabase.execSQL(CREATE_USER_TABLE);
             Toast.makeText(context, "Database created", Toast.LENGTH_LONG).show();
@@ -56,11 +56,11 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(db_contract.User.COMPLETE_NAME, name);
-        values.put(db_contract.User.USERNAME, username);
-        values.put(db_contract.User.PASSWORD, password);
+        values.put(DB_Contract.User.COMPLETE_NAME, name);
+        values.put(DB_Contract.User.USERNAME, username);
+        values.put(DB_Contract.User.PASSWORD, password);
 
-        long result = sqliteDatabase.insert(db_contract.User.USER_TABLE,null, values);
+        long result = sqliteDatabase.insert(DB_Contract.User.USER_TABLE,null, values);
         if (result == -1) {
             return false;
         }
@@ -69,7 +69,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     public Cursor selectAllUser() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query(db_contract.User.USER_TABLE,
+        Cursor result = db.query(DB_Contract.User.USER_TABLE,
                 null,
                 null,
                 null,
@@ -79,22 +79,42 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor selectUserByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columnsNeeded = {
+                DB_Contract.User.ID,
+                DB_Contract.User.COMPLETE_NAME,
+                DB_Contract.User.USERNAME,
+                DB_Contract.User.PASSWORD
+        };
+        String selection = DB_Contract.User.USERNAME+" = ?";
+        String[] selectionArgs = {username};
+        Cursor result = db.query(DB_Contract.User.USER_TABLE,
+                columnsNeeded,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        return result;
+    }
+
     public Cursor selectUserByIDOrName(String ID, String complete_name){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnsNeeded = {
-                db_contract.User.ID,
-                db_contract.User.COMPLETE_NAME,
-                db_contract.User.USERNAME,
-                db_contract.User.PASSWORD
+                DB_Contract.User.ID,
+                DB_Contract.User.COMPLETE_NAME,
+                DB_Contract.User.USERNAME,
+                DB_Contract.User.PASSWORD
         }; // SELECT * FROM 'table_user' WHERE 'id' = ? OR 'complete_name' LIKE ?
-        String selection = db_contract.User.ID+" = ? OR "+// = ? AND
-                db_contract.User.COMPLETE_NAME+" LIKE ?";
+        String selection = DB_Contract.User.ID+" = ? OR "+// = ? AND
+                DB_Contract.User.COMPLETE_NAME+" LIKE ?";
         String[] selectionArgs = {ID,"%"+complete_name+"%"};
 
         //Sorting
-        String orderBy = db_contract.User.ID+" DESC ";
+        String orderBy = DB_Contract.User.ID+" DESC ";
 
-        Cursor result = db.query(db_contract.User.USER_TABLE,
+        Cursor result = db.query(DB_Contract.User.USER_TABLE,
                 columnsNeeded,//columns
                 selection,
                 selectionArgs,
@@ -108,22 +128,22 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(db_contract.User.COMPLETE_NAME,name);
-        values.put(db_contract.User.USERNAME,username);
-        values.put(db_contract.User.PASSWORD,password);
+        values.put(DB_Contract.User.COMPLETE_NAME,name);
+        values.put(DB_Contract.User.USERNAME,username);
+        values.put(DB_Contract.User.PASSWORD,password);
 
-        String selection = db_contract.User.ID+" = ? ";
+        String selection = DB_Contract.User.ID+" = ? ";
         String[] selectionArgs = {ID};
 
-        int affected = db.update(db_contract.User.USER_TABLE,values,selection,selectionArgs);
+        int affected = db.update(DB_Contract.User.USER_TABLE,values,selection,selectionArgs);
 
         return affected > 0;
     }
     public Boolean deleteUser(String ID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = db_contract.User.ID+" = ? ";
+        String selection = DB_Contract.User.ID+" = ? ";
         String[] selectionArgs = {ID};
-        int affected = db.delete(db_contract.User.USER_TABLE,selection,selectionArgs);
+        int affected = db.delete(DB_Contract.User.USER_TABLE,selection,selectionArgs);
         return affected > 0;
     }
 }

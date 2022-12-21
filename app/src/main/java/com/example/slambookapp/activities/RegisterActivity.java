@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                     boolean check = password.getText().toString().equals(passwordConfirm.getText().toString());
                     if(!check) {Toast.makeText(context, "Password doesn't match", Toast.LENGTH_SHORT).show();return;}
                     if(database.insertIntoTable(fullname.getText().toString(),email.getText().toString(),password.getText().toString())){
-                        Toast.makeText(context, "Sign up account successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Sign up account successful ", Toast.LENGTH_SHORT).show();
                         finish();
                     } else Toast.makeText(context, "Sign up account failed", Toast.LENGTH_SHORT).show();
                     break;

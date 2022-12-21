@@ -2,7 +2,7 @@ package com.example.slambookapp.database;
 
 import android.provider.BaseColumns;
 
-public class db_contract {
+public class DB_Contract {
     public static class User implements BaseColumns {
         //table
         public static String USER_TABLE = "user_table";
