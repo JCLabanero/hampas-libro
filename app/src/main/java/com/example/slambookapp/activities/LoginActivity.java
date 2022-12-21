@@ -19,6 +19,8 @@ public class LoginActivity extends AppCompatActivity {
     Context context;
     private SQLiteDBHelper db;
     TextView text;
+    EditText username;
+    EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
 
         text = findViewById(R.id.welcome);
         View layout = findViewById(R.id.linearLayout3);
-        EditText username = findViewById(R.id.editTextEmailAddress);
-        EditText password = findViewById(R.id.editTextPassword);
+        username = findViewById(R.id.editTextEmailAddress);
+        password = findViewById(R.id.editTextPassword);
         Button buttonLogin = findViewById(R.id.buttonLogin);
         TextView buttonSignUp = findViewById(R.id.textViewSignUp);
 
@@ -46,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 //                selectAndDisplayAllUser();
-                selectAndDisplayUserByID();
-
+//                selectAndDisplayUserByID();
+                selectAndDisplayUserByIDInEditText();
 
                 Intent intent = new Intent(context, QuestionActivity.class);
                 startActivity(intent);
@@ -55,6 +57,18 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void selectAndDisplayUserByIDInEditText() {
+        Cursor result = db.selectUserByID("1","john carlo");
+        if(result.getCount()==0){
+            Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
+        } else {
+            while (result.moveToNext()){
+                username.setText(result.getString(2));
+                password.setText(result.getString(3));
+            }
+        }
     }
 
     private void selectAndDisplayUserByID() {

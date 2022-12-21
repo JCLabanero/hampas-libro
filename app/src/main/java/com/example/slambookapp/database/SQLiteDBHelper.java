@@ -83,9 +83,11 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnsNeeded = {
                 db_contract.User.ID,
-                db_contract.User.COMPLETE_NAME
+                db_contract.User.COMPLETE_NAME,
+                db_contract.User.USERNAME,
+                db_contract.User.PASSWORD
         }; // SELECT * FROM 'table_user' WHERE 'id' = ? OR 'complete_name' LIKE ?
-        String selection = db_contract.User.ID+" = ? OR "+
+        String selection = db_contract.User.ID+" = ? OR "+// = ? AND
                 db_contract.User.COMPLETE_NAME+" LIKE ?";
         String[] selectionArgs = {ID,"%"+complete_name+"%"};
 
