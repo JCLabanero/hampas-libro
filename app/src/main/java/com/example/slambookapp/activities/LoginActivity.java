@@ -14,7 +14,7 @@ import com.example.slambookapp.R;
 import com.example.slambookapp.database.SQLiteDBHelper;
 
 public class LoginActivity extends AppCompatActivity {
-    SQLiteDBHelper database;
+    private SQLiteDBHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +28,11 @@ public class LoginActivity extends AppCompatActivity {
         Button buttonLogin = findViewById(R.id.buttonLogin);
         TextView buttonSignUp = findViewById(R.id.textViewSignUp);
 
-        database = new SQLiteDBHelper(context);
+        db = new SQLiteDBHelper(context);
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                database.close();
                 Intent intent = new Intent(context, RegisterActivity.class);
                 startActivity(intent);
             }
