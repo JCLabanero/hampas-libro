@@ -79,7 +79,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public Cursor selectUserByID(String ID, String complete_name){
+    public Cursor selectUserByIDOrName(String ID, String complete_name){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnsNeeded = {
                 db_contract.User.ID,
@@ -102,5 +102,28 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 null,
                 orderBy);
         return result;
+    }
+    public Boolean updateUser(String ID, String name, String username, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(db_contract.User.COMPLETE_NAME,name);
+        values.put(db_contract.User.USERNAME,username);
+        values.put(db_contract.User.PASSWORD,password);
+
+        String selection = db_contract.User.ID+" = ? ";
+        String[] selectionArgs = {ID};
+
+        int affected = db.update(db_contract.User.USER_TABLE,values,selection,selectionArgs);
+
+        return affected > 0;
+    }
+    public Boolean deleteUser(String ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = db_contract.User.ID+" = ? ";
+        String[] selectionArgs = {ID};
+        int affected = db.delete(db_contract.User.USER_TABLE,selection,selectionArgs);
+        return affected > 0;
     }
 }

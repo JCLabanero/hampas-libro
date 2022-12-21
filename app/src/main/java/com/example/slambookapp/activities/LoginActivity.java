@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void selectAndDisplayUserByIDInEditText() {
-        Cursor result = db.selectUserByID("1","john carlo");
+        Cursor result = db.selectUserByIDOrName("1","john carlo");
         if(result.getCount()==0){
             Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         } else {
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void selectAndDisplayUserByID() {
         text.setText("");//toReset
-        Cursor result = db.selectUserByID("1","john carlo");
+        Cursor result = db.selectUserByIDOrName("1","john carlo");
         if(result.getCount()==0){
             Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         } else {
