@@ -45,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                selectAndDisplayAllUser();
+//                selectAndDisplayAllUser();
+                selectAndDisplayUserByID();
 
 
                 Intent intent = new Intent(context, QuestionActivity.class);
@@ -56,11 +57,26 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void selectAndDisplayUserByID() {
+        text.setText("");//toReset
+        Cursor result = db.selectUserByID("1","john carlo");
+        if(result.getCount()==0){
+            Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
+        } else {
+            StringBuffer userList = new StringBuffer();
+            while (result.moveToNext()){
+                userList.append("ID: "+result.getString(0)+
+                        "/Name: "+result.getString(1));
+            }
+            text.setText(userList);
+        }
+    }
+
     private void selectAndDisplayAllUser() {
         text.setText("");
         Cursor result = db.selectAllUser();
         if(result.getCount()==0){
-            Toast.makeText(this, "no data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         } else {
             StringBuffer userList = new StringBuffer();
             while (result.moveToNext()){

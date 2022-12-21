@@ -69,7 +69,36 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     public Cursor selectAllUser() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query(db_contract.User.USER_TABLE,null,null,null,null,null,null);
+        Cursor result = db.query(db_contract.User.USER_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        return result;
+    }
+
+    public Cursor selectUserByID(String ID, String complete_name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columnsNeeded = {
+                db_contract.User.ID,
+                db_contract.User.COMPLETE_NAME
+        }; // SELECT * FROM 'table_user' WHERE 'id' = ? OR 'complete_name' LIKE ?
+        String selection = db_contract.User.ID+" = ? OR "+
+                db_contract.User.COMPLETE_NAME+" LIKE ?";
+        String[] selectionArgs = {ID,"%"+complete_name+"%"};
+
+        //Sorting
+        String orderBy = db_contract.User.ID+" DESC ";
+
+        Cursor result = db.query(db_contract.User.USER_TABLE,
+                columnsNeeded,//columns
+                selection,
+                selectionArgs,
+                null,
+                null,
+                orderBy);
         return result;
     }
 }
