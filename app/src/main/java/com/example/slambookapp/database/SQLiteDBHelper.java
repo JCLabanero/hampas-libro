@@ -2,6 +2,7 @@ package com.example.slambookapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -64,5 +65,11 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    public Cursor selectAllUser() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query(db_contract.User.USER_TABLE,null,null,null,null,null,null);
+        return result;
     }
 }
