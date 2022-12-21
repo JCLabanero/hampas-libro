@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                 checkUserIfExists();
             }
         });
-
-
     }
 
     private void checkUserIfExists() {
@@ -69,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-
     }
 
     private void selectAndDisplayUserByIDInEditText() {

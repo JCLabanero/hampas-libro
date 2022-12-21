@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.slambookapp.R;
 import com.example.slambookapp.classes.ContentQuestions;
+import com.example.slambookapp.database.SQLiteDBHelper;
 import com.example.slambookapp.viewholders.RecyclerViewAdapterForQuestions;
 
 import java.util.ArrayList;
@@ -37,12 +38,14 @@ public class QuestionActivity extends AppCompatActivity {
             "A song you want to dedicate me?",
             "Something you like in me?",
             "Something you like in me?"};
+    SQLiteDBHelper database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         init();
+        database = new SQLiteDBHelper(context);
     }
     public void init() {
         contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[0]));

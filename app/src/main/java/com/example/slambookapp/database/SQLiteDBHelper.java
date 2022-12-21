@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 1;
+    private static int VERSION = 3;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -35,8 +35,15 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'"+ DB_Contract.User.USERNAME+"' TEXT NOT NULL," +
                 "'"+ DB_Contract.User.PASSWORD+"' TEXT NOT NULL," +
                 "UNIQUE ('"+ DB_Contract.User.ID+"') ON CONFLICT ABORT)";
+        final String CREATE_QUESTION_TABLE = "CREATE TABLE '"+DB_Contract.Question.QUESTION_TABLE+"' (" +
+                "'"+DB_Contract.Question.ID+"' INTEGER PRIMARY KEY," +
+                "'"+DB_Contract.Question.CONTENT+"' TEXT NOT NULL," +
+                " FOREIGN KEY ('"+DB_Contract.Question.ID+"') REFERENCES " +
+                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"')," +
+                "UNIQUE ('"+DB_Contract.Question.ID+"') ON CONFLICT ABORT)";
         try {
             sqLiteDatabase.execSQL(CREATE_USER_TABLE);
+            sqLiteDatabase.execSQL(CREATE_QUESTION_TABLE);
             Toast.makeText(context, "Database created", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,12 +53,26 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldDatabase, int newDatabase) {
         //For updating table, drop the first table then auto create the updated one VERSION=2
-        /*final String DROP_USER_TABLE = "DROP TABLE IF EXISTS "+db_contract.User.USER_TABLE;
+        /*final String DROP_USER_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.User.USER_TABLE;
+        final String DROP_QUESTION_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.Question.QUESTION_TABLE;
         sqLiteDatabase.execSQL(DROP_USER_TABLE);
+        sqLiteDatabase.execSQL(DROP_QUESTION_TABLE);
         onCreate(sqLiteDatabase);*/
     }
 
-    public boolean insertIntoTable(String name, String username, String password){
+    public boolean insertQuestion(String question){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DB_Contract.Question.CONTENT, question);
+
+        long result = sqLiteDatabase.insert(DB_Contract.User.USER_TABLE, null, values);
+
+        return result < 0;
+    }
+
+    public boolean insertIntoUserTable(String name, String username, String password){
         SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();

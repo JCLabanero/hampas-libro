@@ -3,7 +3,6 @@ package com.example.slambookapp.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                 case R.id.buttonSignup:
                     boolean check = password.getText().toString().equals(passwordConfirm.getText().toString());
                     if(!check) {Toast.makeText(context, "Password doesn't match", Toast.LENGTH_SHORT).show();return;}
-                    if(database.insertIntoTable(fullname.getText().toString(),email.getText().toString(),password.getText().toString())){
+                    if(database.insertIntoUserTable(fullname.getText().toString(),email.getText().toString(),password.getText().toString())){
                         Toast.makeText(context, "Sign up account successful ", Toast.LENGTH_SHORT).show();
                         finish();
                     } else Toast.makeText(context, "Sign up account failed", Toast.LENGTH_SHORT).show();
