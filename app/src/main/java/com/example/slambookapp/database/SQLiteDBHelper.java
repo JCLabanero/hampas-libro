@@ -2,7 +2,6 @@ package com.example.slambookapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 8;
+    private static int VERSION = 9;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -32,14 +31,22 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "UNIQUE ('"+ DB_Contract.User.ID+"') ON CONFLICT ABORT)";
         final String CREATE_QUESTION_TABLE = "CREATE TABLE '"+DB_Contract.Question.QUESTION_TABLE+"' (" +
                 "'"+DB_Contract.Question.ID+"' INTEGER PRIMARY KEY," +
-                "'"+DB_Contract.Question.CONTENT+"' TEXT NOT NULL," +
+                "'"+DB_Contract.Question.QUESTION +"' TEXT NOT NULL," +
                 "'"+DB_Contract.Question.USER_ID+"' INTEGER NOT NULL," +
                 " FOREIGN KEY ('"+DB_Contract.Question.USER_ID+"') REFERENCES " +
                 "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON DELETE CASCADE ON UPDATE CASCADE," + // CASCADE not a good practice
                 "UNIQUE ('"+DB_Contract.Question.ID+"') ON CONFLICT ABORT)";
+        final String CREATE_ANSWER_TABLE = "CREATE TABLE '"+DB_Contract.Answer.ANSWER_TABLE+"' (" +
+                "'"+DB_Contract.Answer.ID+"' INTEGER PRIMARY KEY," +
+                "'"+DB_Contract.Answer.ANSWER +"' TEXT NOT NULL," +
+                "'"+DB_Contract.Answer.QUESTION_ID+"' INTEGER NOT NULL," +
+                " FOREIGN KEY ('"+DB_Contract.Answer.QUESTION_ID+"') REFERENCES " +
+                "'"+DB_Contract.Question.QUESTION_TABLE+"' ('"+DB_Contract.Question.ID+"') ON DELETE CASCADE ON UPDATE CASCADE," + // CASCADE not a good practice
+                "UNIQUE ('"+DB_Contract.Answer.ID+"') ON CONFLICT ABORT)";
         try {
             sqLiteDatabase.execSQL(CREATE_USER_TABLE);
             sqLiteDatabase.execSQL(CREATE_QUESTION_TABLE);
+            sqLiteDatabase.execSQL(CREATE_ANSWER_TABLE);
             Toast.makeText(context, "Database created", Toast.LENGTH_LONG).show();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,8 +57,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldDatabase, int newDatabase) {
         final String DROP_USER_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.User.USER_TABLE;
         final String DROP_QUESTION_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.Question.QUESTION_TABLE;
+        final String DROP_ANSWER_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.Answer.ANSWER_TABLE;
         sqLiteDatabase.execSQL(DROP_USER_TABLE);
         sqLiteDatabase.execSQL(DROP_QUESTION_TABLE);
+        sqLiteDatabase.execSQL(DROP_ANSWER_TABLE);
         onCreate(sqLiteDatabase);
     }//For updating table, drop the first table then auto create the updated one VERSION=2
 
@@ -59,7 +68,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DB_Contract.Question.CONTENT, question);
+        values.put(DB_Contract.Question.QUESTION, question);
         values.put(DB_Contract.Question.USER_ID, id);
 
         long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
