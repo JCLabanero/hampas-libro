@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
 //                selectAndDisplayAllUser();
 //                selectAndDisplayUserByID();
 //                selectAndDisplayUserByIDInEditText();
+                username.setText("johncarlolabanero@yahoo.com");
+                password.setText("password");
                 checkUserIfExists();
             }
         });
@@ -61,9 +63,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(context, "user doesn't exist", Toast.LENGTH_SHORT).show();
         } else {
             while (result.moveToNext()) {
-                username.setText("");
-                password.setText("");
                 Intent intent = new Intent(context, QuestionActivity.class);
+                intent.putExtra("Key",result.getInt(0));
+//                username.setText("");
+//                password.setText("");
                 startActivity(intent);
             }
         }

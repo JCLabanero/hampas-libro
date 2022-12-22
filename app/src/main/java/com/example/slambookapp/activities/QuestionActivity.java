@@ -24,7 +24,7 @@ public class QuestionActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     RecyclerViewAdapterForQuestions recyclerAdapter;
     Button buttonAddRandomQuestion;
-    Context context = this;
+    Context context;
     ArrayList<ContentQuestions>  contentQuestionsList = new ArrayList<>();
     String[] questions = {"Who is your secret crush?",
             "You do want me to put this as my status?",
@@ -39,6 +39,7 @@ public class QuestionActivity extends AppCompatActivity {
             "Something you like in me?",
             "Something you like in me?"};
     SQLiteDBHelper database;
+    int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,9 @@ public class QuestionActivity extends AppCompatActivity {
         database = new SQLiteDBHelper(context);
     }
     public void init() {
-        contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[0]));
+        context = this;
+        Intent intent = getIntent();
+        userID = intent.getIntExtra("Key",0);
         recyclerView = findViewById(R.id.recyclerViewQuestions);
         recyclerView.hasFixedSize();
 
@@ -63,20 +66,29 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int rand = (int) (Math.random() * questions.length);
+                insertNewQuestion(rand);
                 contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[rand]));
                 recyclerAdapter.notifyItemInserted(0);
                 layoutManager.scrollToPosition(0);
-                Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
             }
         });
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForQuestions.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Toast.makeText(context, "you click "+contentQuestionsList.get(position).getQuestion(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context,AnswersActivity.class);
                 intent.putExtra("question", contentQuestionsList.get(position).getQuestion());
                 startActivity(intent);
             }
         });
+    }
+
+    private void insertNewQuestion(Integer rand) {
+        if(database.insertQuestion(questions[rand], userID)){
+            Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
+        }else Toast.makeText(context, "question adding failed", Toast.LENGTH_SHORT).show();
+    }
+
+    private void retrieveQuestion(){
+
     }
 }

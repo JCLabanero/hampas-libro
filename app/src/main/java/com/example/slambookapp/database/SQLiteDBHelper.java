@@ -2,6 +2,7 @@ package com.example.slambookapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,7 +13,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 3;
+    private static int VERSION = 8;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -38,7 +39,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         final String CREATE_QUESTION_TABLE = "CREATE TABLE '"+DB_Contract.Question.QUESTION_TABLE+"' (" +
                 "'"+DB_Contract.Question.ID+"' INTEGER PRIMARY KEY," +
                 "'"+DB_Contract.Question.CONTENT+"' TEXT NOT NULL," +
-                " FOREIGN KEY ('"+DB_Contract.Question.ID+"') REFERENCES " +
+                "'"+DB_Contract.Question.USER_ID+"' INTEGER NOT NULL," +
+                " FOREIGN KEY ('"+DB_Contract.Question.USER_ID+"') REFERENCES " +
                 "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"')," +
                 "UNIQUE ('"+DB_Contract.Question.ID+"') ON CONFLICT ABORT)";
         try {
@@ -53,28 +55,26 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldDatabase, int newDatabase) {
         //For updating table, drop the first table then auto create the updated one VERSION=2
-        /*final String DROP_USER_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.User.USER_TABLE;
+        final String DROP_USER_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.User.USER_TABLE;
         final String DROP_QUESTION_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.Question.QUESTION_TABLE;
         sqLiteDatabase.execSQL(DROP_USER_TABLE);
         sqLiteDatabase.execSQL(DROP_QUESTION_TABLE);
-        onCreate(sqLiteDatabase);*/
+        onCreate(sqLiteDatabase);
     }
 
-    public boolean insertQuestion(String question){
+    public boolean insertQuestion(String question, Integer id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         values.put(DB_Contract.Question.CONTENT, question);
+        values.put(DB_Contract.Question.USER_ID, id);
 
-        long result = sqLiteDatabase.insert(DB_Contract.User.USER_TABLE, null, values);
-
-        return result < 0;
+        long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
+        return result != -1;
     }
 
     public boolean insertIntoUserTable(String name, String username, String password){
         SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
 
         values.put(DB_Contract.User.COMPLETE_NAME, name);
@@ -82,10 +82,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         values.put(DB_Contract.User.PASSWORD, password);
 
         long result = sqliteDatabase.insert(DB_Contract.User.USER_TABLE,null, values);
-        if (result == -1) {
-            return false;
-        }
-        return true;
+        return result != -1;
     }
 
     public Cursor selectAllUser() {
