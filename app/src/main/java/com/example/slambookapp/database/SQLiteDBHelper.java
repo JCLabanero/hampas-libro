@@ -24,12 +24,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        /*final String CREATE_USER_TABLE = "CREATE TABLE 'table_name' (" +
-                "'user_id' INTEGER PRIMARY KEY," +
-                "'user_full_name' TEXT NOT NULL," +
-                "'user_name' TEXT NOT NULL," +
-                "'user_password' TEXT NOT NULL," +
-                "UNIQUE ('user_id') ON CONFLICT ABORT)";*/
         final String CREATE_USER_TABLE = "CREATE TABLE '"+ DB_Contract.User.USER_TABLE+"' (" +
                 "'"+ DB_Contract.User.ID+"' INTEGER PRIMARY KEY," +
                 "'"+ DB_Contract.User.COMPLETE_NAME+"' TEXT NOT NULL," +
@@ -50,17 +44,16 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }/*final String CREATE_USER_TABLE = "CREATE TABLE 'table_name' (" + "'user_id' INTEGER PRIMARY KEY," + "'user_full_name' TEXT NOT NULL," + "'user_name' TEXT NOT NULL," + "'user_password' TEXT NOT NULL," + "UNIQUE ('user_id') ON CONFLICT ABORT)";*/
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldDatabase, int newDatabase) {
-        //For updating table, drop the first table then auto create the updated one VERSION=2
         final String DROP_USER_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.User.USER_TABLE;
         final String DROP_QUESTION_TABLE = "DROP TABLE IF EXISTS "+DB_Contract.Question.QUESTION_TABLE;
         sqLiteDatabase.execSQL(DROP_USER_TABLE);
         sqLiteDatabase.execSQL(DROP_QUESTION_TABLE);
         onCreate(sqLiteDatabase);
-    }
+    }//For updating table, drop the first table then auto create the updated one VERSION=2
 
     public boolean insertQuestion(String question, Integer id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -140,7 +133,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         String selection = DB_Contract.User.ID+" = ? OR "+// = ? AND
                 DB_Contract.User.COMPLETE_NAME+" LIKE ?";
         String[] selectionArgs = {ID,"%"+complete_name+"%"};
-
         //Sorting
         String orderBy = DB_Contract.User.ID+" DESC ";
 

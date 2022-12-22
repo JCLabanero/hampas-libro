@@ -46,10 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-//                selectAndDisplayAllUser();
-//                selectAndDisplayUserByID();
-//                selectAndDisplayUserByIDInEditText();
+            public void onClick(View v) {//                selectAndDisplayAllUser(); selectAndDisplayUserByID(); selectAndDisplayUserByIDInEditText();
                 username.setText("johncarlolabanero@yahoo.com");
                 password.setText("password");
                 checkUserIfExists();

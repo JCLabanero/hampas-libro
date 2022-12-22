@@ -53,16 +53,13 @@ public class QuestionActivity extends AppCompatActivity {
         context = this;
         database = new SQLiteDBHelper(context);
         Intent intent = getIntent();
-        userID = intent.getIntExtra("Key",0);
-//        contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_foreground,questions[0]));
+        userID = intent.getIntExtra("Key", 0);
         retrieveQuestion();
         recyclerView = findViewById(R.id.recyclerViewQuestions);
         recyclerView.hasFixedSize();
-
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-
-        recyclerAdapter = new RecyclerViewAdapterForQuestions(context,R.layout.row_slam_questions,contentQuestionsList);
+        recyclerAdapter = new RecyclerViewAdapterForQuestions(context, R.layout.row_slam_questions, contentQuestionsList);
         recyclerView.setAdapter(recyclerAdapter);
 
         buttonAddRandomQuestion = findViewById(R.id.buttonAddQuestion);
