@@ -41,7 +41,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'"+DB_Contract.Question.CONTENT+"' TEXT NOT NULL," +
                 "'"+DB_Contract.Question.USER_ID+"' INTEGER NOT NULL," +
                 " FOREIGN KEY ('"+DB_Contract.Question.USER_ID+"') REFERENCES " +
-                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"')," +
+                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON DELETE CASCADE ON UPDATE CASCADE," + // CASCADE not a good practice
                 "UNIQUE ('"+DB_Contract.Question.ID+"') ON CONFLICT ABORT)";
         try {
             sqLiteDatabase.execSQL(CREATE_USER_TABLE);
@@ -83,6 +83,18 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         long result = sqliteDatabase.insert(DB_Contract.User.USER_TABLE,null, values);
         return result != -1;
+    }
+
+    public Cursor selectAllQuestion() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        return result;
     }
 
     public Cursor selectAllUser() {

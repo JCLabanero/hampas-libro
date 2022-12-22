@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -45,13 +46,16 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
         init();
-        database = new SQLiteDBHelper(context);
     }
     public void init() {
         context = this;
+        database = new SQLiteDBHelper(context);
         Intent intent = getIntent();
         userID = intent.getIntExtra("Key",0);
+//        contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_foreground,questions[0]));
+        retrieveQuestion();
         recyclerView = findViewById(R.id.recyclerViewQuestions);
         recyclerView.hasFixedSize();
 
@@ -89,6 +93,8 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void retrieveQuestion(){
-
+        Cursor result = database.selectAllQuestion();
+        if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
+        else{while (result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1)));}
     }
 }
