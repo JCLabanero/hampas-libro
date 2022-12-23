@@ -3,6 +3,7 @@ package com.example.slambookapp.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -42,6 +43,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'"+DB_Contract.Answer.QUESTION_ID+"' INTEGER NOT NULL," +
                 " FOREIGN KEY ('"+DB_Contract.Answer.QUESTION_ID+"') REFERENCES " +
                 "'"+DB_Contract.Question.QUESTION_TABLE+"' ('"+DB_Contract.Question.ID+"') ON DELETE CASCADE ON UPDATE CASCADE," + // CASCADE not a good practice
+                " FOREIGN KEY ('"+DB_Contract.Answer.USER_ID+"') REFERENCES " +
+                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON DELETE CASCADE ON UPDATE CASCADE,"+
                 "UNIQUE ('"+DB_Contract.Answer.ID+"') ON CONFLICT ABORT)";
         try {
             sqLiteDatabase.execSQL(CREATE_USER_TABLE);
@@ -191,6 +194,14 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         int affected = db.update(DB_Contract.User.USER_TABLE,values,selection,selectionArgs);
 
         return affected > 0;
+    }
+    public boolean deleteAnswerByRowNumber(String rowNumber){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db,DB_Contract.Answer.ANSWER_TABLE);
+        Toast.makeText(context, "count "+count, Toast.LENGTH_SHORT).show();
+//        String selection = DB_Contract.Answer.ANSWER_TABLE+"=?";
+//        String[] selectionArgs = {};
+        return false;
     }
     public boolean deleteAnswer(String ID){
         SQLiteDatabase db = this.getWritableDatabase();

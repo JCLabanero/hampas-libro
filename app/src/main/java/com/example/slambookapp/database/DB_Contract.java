@@ -23,6 +23,7 @@ public class DB_Contract {
         public static String ID = "answer_id";
         public static String ANSWER = "answer";
         public static String QUESTION_ID = "question_id";
+        public static String USER_ID = "user_id";
     }
     /*public static class Post implements BaseColumns {
         //table

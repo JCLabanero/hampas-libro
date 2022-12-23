@@ -78,7 +78,8 @@ public class QuestionActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 Intent intent = new Intent(context,AnswersActivity.class);
                 intent.putExtra("question", contentQuestionsList.get(position).getQuestion());
-                intent.putExtra("id", userID);
+                intent.putExtra("user_id", userID);
+                intent.putExtra("question_id","");
                 startActivity(intent);
             }
         });
