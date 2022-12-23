@@ -46,10 +46,8 @@ public class AnswersActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userID = intent.getIntExtra("user_id",0);
         question.setText(intent.getStringExtra("question"));
+        retrieveAnswer();
 
-        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Joanna Laine Pueyo","- John Carlo Labanero"));
-        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Angel Jane Labanero","- John Carlo Labanero"));
-        contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Laine Pueyo","- John Carlo Labanero"));
         recyclerView1 = findViewById(R.id.recyclerView);
         recyclerView1.hasFixedSize();
         layoutManager = new LinearLayoutManager(context);
@@ -77,6 +75,7 @@ public class AnswersActivity extends AppCompatActivity {
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
+                                deleteAnswer(position);
                                 contentAnswersList.remove(position);
                                 recyclerAdapter.notifyItemRemoved(position);
                                 layoutManager.scrollToPosition(position);
@@ -91,7 +90,6 @@ public class AnswersActivity extends AppCompatActivity {
                 warning.show();
             }
         });
-
     }
 
     private void insertNewAnswer() {
@@ -104,8 +102,13 @@ public class AnswersActivity extends AppCompatActivity {
         }else Toast.makeText(context, "answer adding failed", Toast.LENGTH_SHORT).show();
     }
     private void retrieveAnswer(){
-        Cursor result = database.selectAllQuestion();
+        Cursor result = database.selectAllAnswer();
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
-//        else {while(result.moveToNext()) contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1),));}
+        else {while(result.moveToNext()) contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1),"null"));}
+    }
+    private void deleteAnswer(int rowNumber){
+        if(database.deleteByRowNumber(String.valueOf(rowNumber))){
+            Toast.makeText(context, "deleted successfully", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(context, "delete failed", Toast.LENGTH_SHORT).show();
     }
 }

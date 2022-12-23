@@ -92,7 +92,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void retrieveQuestion(){
-        Cursor result = database.selectAllQuestion();
+        Cursor result = database.selectAllQuestionOfUserID(String.valueOf(userID));
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         else{while (result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1)));}
     }

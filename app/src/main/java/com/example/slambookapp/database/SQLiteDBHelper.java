@@ -123,6 +123,25 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 null);
         return result;
     }
+    public Cursor selectAllQuestionOfUserID(String user_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] columnsNeeded = {
+                DB_Contract.Question.ID,
+                DB_Contract.Question.QUESTION,
+                DB_Contract.Question.USER_ID
+        };
+        String selection = DB_Contract.Question.USER_ID+"=?";
+        String[] selectionArgs = {user_id};
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                columnsNeeded,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+                );
+        return result;
+    }
 
     public Cursor selectAllUser() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -195,17 +214,16 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         return affected > 0;
     }
-    public boolean deleteAnswerByRowNumber(String rowNumber){
+    public boolean deleteByRowNumber(String rowNumber){
         SQLiteDatabase db = this.getWritableDatabase();
-        long count = DatabaseUtils.queryNumEntries(db,DB_Contract.Answer.ANSWER_TABLE);
-        Toast.makeText(context, "count "+count, Toast.LENGTH_SHORT).show();
-//        String selection = DB_Contract.Answer.ANSWER_TABLE+"=?";
-//        String[] selectionArgs = {};
-        return false;
+        String selection = DB_Contract.Answer._COUNT+"=?";
+        String[] selectionArgs = {rowNumber};
+        int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
+        return affected>0;
     }
     public boolean deleteAnswer(String ID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = DB_Contract.Answer.ANSWER_TABLE+"=?";
+        String selection = DB_Contract.Answer.ID+"=?";
         String[] selectionArgs = {ID};
         int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
         return affected>0;
