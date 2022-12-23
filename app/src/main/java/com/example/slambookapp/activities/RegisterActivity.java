@@ -52,6 +52,18 @@ public class RegisterActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.buttonSignup:
                     boolean check = password.getText().toString().equals(passwordConfirm.getText().toString());
+                    /*if(fullname.getText() == null ||email.getText().equals("")||password.getText().equals("")||password.getText().equals("")){
+                        Toast.makeText(context, "fill up all information first", Toast.LENGTH_SHORT).show();
+                        return;
+                    }*/
+                    String name = String.valueOf(fullname.getText()),
+                            username = String.valueOf(email.getText()),
+                                    pass = String.valueOf(password.getText()),
+                                            passConfirm = String.valueOf(passwordConfirm.getText());
+                    if(name.matches("")||username.matches("")||pass.matches("")||passConfirm.matches("")){
+                        Toast.makeText(context, "fill up all information first", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     if(!check) {Toast.makeText(context, "Password doesn't match", Toast.LENGTH_SHORT).show();return;}
                     if(database.insertIntoUserTable(fullname.getText().toString(),email.getText().toString(),password.getText().toString())){
                         Toast.makeText(context, "Sign up account successful ", Toast.LENGTH_SHORT).show();

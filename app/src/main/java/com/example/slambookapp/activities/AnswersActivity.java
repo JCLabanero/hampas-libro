@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.slambookapp.R;
@@ -22,18 +24,24 @@ public class AnswersActivity extends AppCompatActivity {
     RecyclerView recyclerView1;
     RecyclerView.LayoutManager layoutManager; //layout linear, grid etc... also control layout
     RecyclerViewAdapterForAnswers recyclerAdapter; //adapter that holds our design
+    TextView question;
     Button buttonAdd;
     Context context = this;
     ArrayList<ContentAnswers> contentAnswersList = new ArrayList<>();
+    int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answers);
         init();
+        Intent intent = getIntent();
+        userID = intent.getIntExtra("Key",0);
+        question.setText(intent.getStringExtra("question"));
     }
 
     public void init() {
+        question = findViewById(R.id.textViewQuestion);
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Joanna Laine Pueyo","- John Carlo Labanero"));
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Angel Jane Labanero","- John Carlo Labanero"));
         contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_foreground,"Laine Pueyo","- John Carlo Labanero"));

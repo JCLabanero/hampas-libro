@@ -64,6 +64,17 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }//For updating table, drop the first table then auto create the updated one VERSION=2
 
+    public boolean insertAnswer(String answer, Integer id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DB_Contract.Answer.ANSWER, answer);
+        values.put(DB_Contract.Answer.QUESTION_ID,id);
+
+        long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
+        return result!=-1;
+    }
+
     public boolean insertQuestion(String question, Integer id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -85,6 +96,17 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         long result = sqliteDatabase.insert(DB_Contract.User.USER_TABLE,null, values);
         return result != -1;
+    }
+    public Cursor selectAllAnswer(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        return result;
     }
 
     public Cursor selectAllQuestion() {
@@ -168,6 +190,20 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         int affected = db.update(DB_Contract.User.USER_TABLE,values,selection,selectionArgs);
 
+        return affected > 0;
+    }
+    public boolean deleteAnswer(String ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = DB_Contract.Answer.ANSWER_TABLE+"=?";
+        String[] selectionArgs = {ID};
+        int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
+        return affected>0;
+    }
+    public boolean deleteQuestion(String ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = DB_Contract.Question.ID+"=?";
+        String[] selectionArgs = {ID};
+        int affected = db.delete(DB_Contract.Question.QUESTION_TABLE,selection,selectionArgs);
         return affected > 0;
     }
     public Boolean deleteUser(String ID){
