@@ -3,7 +3,6 @@ package com.example.slambookapp.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 9;
+    private static int VERSION = 14;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -41,10 +40,11 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'"+DB_Contract.Answer.ID+"' INTEGER PRIMARY KEY," +
                 "'"+DB_Contract.Answer.ANSWER +"' TEXT NOT NULL," +
                 "'"+DB_Contract.Answer.QUESTION_ID+"' INTEGER NOT NULL," +
+                "'"+DB_Contract.Answer.USER_ID+"' INTEGER NOT NULL,"+
+//                " FOREIGN KEY ('"+DB_Contract.Answer.USER_ID+"') REFERENCES " +
+//                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON UPDATE NO ACTION,"+
                 " FOREIGN KEY ('"+DB_Contract.Answer.QUESTION_ID+"') REFERENCES " +
                 "'"+DB_Contract.Question.QUESTION_TABLE+"' ('"+DB_Contract.Question.ID+"') ON DELETE CASCADE ON UPDATE CASCADE," + // CASCADE not a good practice
-                " FOREIGN KEY ('"+DB_Contract.Answer.USER_ID+"') REFERENCES " +
-                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON DELETE CASCADE ON UPDATE CASCADE,"+
                 "UNIQUE ('"+DB_Contract.Answer.ID+"') ON CONFLICT ABORT)";
         try {
             sqLiteDatabase.execSQL(CREATE_USER_TABLE);
@@ -65,7 +65,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(DROP_QUESTION_TABLE);
         sqLiteDatabase.execSQL(DROP_ANSWER_TABLE);
         onCreate(sqLiteDatabase);
-    }//For updating table, drop the first table then auto create the updated one VERSION=2
+    }//For updating table, drop the first table then auto create the updated one VERSION=2++
 
 //QUESTIONS
     public boolean insertQuestion(String question, Integer id){
@@ -78,7 +78,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
         return result != -1;
     }//ADD A QUESTION
-    public Cursor selectAllQuestionOfUserID(String user_id){
+    public Cursor selectQuestionByUserID(String user_id){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.USER_ID+"=?";
         String[] selectionArgs = {user_id};
@@ -92,10 +92,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         );
         return result;
     }//BUFFER
-    public Cursor selectQuestionByID(String ID){
+    public Cursor selectQuestionByID(String valueOf){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.ID+"=?";
-        String[] selectionArgs = {ID};
+        String[] selectionArgs = {valueOf};
         Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
                 null,
                 selection,
@@ -125,18 +125,33 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return affected > 0;
     }//DELETE
 //ANSWER
-    public boolean insertAnswer(String answer, Integer id){
+    public boolean insertAnswer(String answer, Integer id, Integer user_id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(DB_Contract.Answer.ANSWER, answer);
         values.put(DB_Contract.Answer.QUESTION_ID,id);
+        values.put(DB_Contract.Answer.USER_ID, user_id);
 
         long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
         return result!=-1;
     }//ADD ANSWER
+    public Cursor selectAnswerOfQuestionIDAndUserID(String valueOf, String valueOf1) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Answer.QUESTION_ID+" = ? AND " + DB_Contract.Answer.USER_ID+" LIKE ? ";
+        String[] selectionArgs = {valueOf,valueOf1};
+        Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }
     public Cursor selectAllAnswerOfQuestionID(String valueOf) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Answer.QUESTION_ID+"=?";
         String[] selectionArgs = {valueOf};
         Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
@@ -149,6 +164,20 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         );
         return result;
     }//BUFFER
+    public Cursor selectAnswerByRowNumber(String valueOf){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Answer._COUNT+"= ? ";
+        String[] selectionArgs = {valueOf};
+        Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }//BUFFER OF ID
     public Cursor selectAllAnswer(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
@@ -188,7 +217,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     }//ADD A USER
     public Cursor selectUserByIDOrName(String ID, String complete_name){
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columnsNeeded = {
+        String[] columnsNeeded = {//Column Structure to return to
                 DB_Contract.User.ID,
                 DB_Contract.User.COMPLETE_NAME,
                 DB_Contract.User.USERNAME,

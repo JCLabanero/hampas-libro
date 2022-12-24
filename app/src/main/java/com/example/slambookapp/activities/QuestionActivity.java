@@ -73,7 +73,7 @@ public class QuestionActivity extends AppCompatActivity {
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForQuestions.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                openQuestion(String.valueOf(position));
+                openQuestion(String.valueOf((position+1)));
 //                openQuestion(contentQuestionsList.get(position).getQuestion());
             }
         });
@@ -89,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void retrieveQuestion(){
-        Cursor result = database.selectAllQuestionOfUserID(String.valueOf(userID));
+        Cursor result = database.selectQuestionByUserID(String.valueOf(userID));
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         else{while (result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1)));}
     }
@@ -99,20 +99,15 @@ public class QuestionActivity extends AppCompatActivity {
             Toast.makeText(context, "question doesn't exist", Toast.LENGTH_SHORT).show();
         } else {
             while (result.moveToNext()){
-//                result.getString(0);//id
-//                result.getString(1);//content
-//                result.getString(2);//
-                startIntent(result.getString(0),result.getString(1),result.getString(2));
-//                if(input.matches(result.getString(1)))
-//                    questionID = Integer.parseInt(result.getString(1));
+                startIntent(result.getString(0),result.getString(1), String.valueOf(userID));
             }
         }
     }
     private void startIntent(String uno, String dos, String tres){
         Intent intent = new Intent(context, AnswersActivity.class);
-        intent.putExtra("id",uno);
+        intent.putExtra("ID",Integer.parseInt(uno));
         intent.putExtra("question",dos);
-        intent.putExtra("question_id", tres);
+        intent.putExtra("user_id", Integer.parseInt(tres));
         startActivity(intent);
     }
 }

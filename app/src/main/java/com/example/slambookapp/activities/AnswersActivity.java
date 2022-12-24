@@ -39,6 +39,7 @@ public class AnswersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answers);
         init();
+        retrieveAnswer();
     }
 
     public void init() {
@@ -47,10 +48,9 @@ public class AnswersActivity extends AppCompatActivity {
         question = findViewById(R.id.textViewQuestion);
 
         Intent intent = getIntent();
-        userID = intent.getIntExtra("question_id",0);
-        questionID = intent.getIntExtra("id",0);
+        userID = intent.getIntExtra("user_id",0);
+        questionID = intent.getIntExtra("ID",0);
         question.setText(intent.getStringExtra("question"));
-//        retrieveAnswer();
 
         recyclerView1 = findViewById(R.id.recyclerView);
         recyclerView1.hasFixedSize();
@@ -93,25 +93,17 @@ public class AnswersActivity extends AppCompatActivity {
     }
 
     private void insertNewAnswer() {
-        if(database.insertAnswer("Hey"+Math.random(),userID)){
-            contentAnswersList.add(0, new ContentAnswers(R.drawable.ic_launcher_foreground,"new","new"));
+        String ans = "My " + Math.random();
+        if(database.insertAnswer(ans,questionID,userID)){
+            contentAnswersList.add(0, new ContentAnswers(R.drawable.ic_launcher_foreground,ans,""+userID));
             recyclerAdapter.notifyItemInserted(0);
             layoutManager.scrollToPosition(0);
             Toast.makeText(context, "new answer added", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(context, "answer adding failed", Toast.LENGTH_SHORT).show();
     }
     private void retrieveAnswer(){
-        Cursor result = database.selectAllAnswerOfQuestionID(String.valueOf(questionID));
+        Cursor result = database.selectAnswerOfQuestionIDAndUserID(String.valueOf(questionID),String.valueOf(userID));
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
-        else {while(result.moveToNext()) contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1),"null"));}
+        else {while(result.moveToNext()) contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1), result.getString(3)));}
     }
-    /*private void deleteAnswer(int input, String answer){
-        if(database.deleteAnswerByContent(answer)){
-            Toast.makeText(context, "deleted successfully", Toast.LENGTH_SHORT).show();
-            contentAnswersList.remove(input);
-            recyclerAdapter.notifyItemRemoved(input);
-            layoutManager.scrollToPosition(input);
-            Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(context, "delete failed", Toast.LENGTH_SHORT).show();
-    }*/
 }
