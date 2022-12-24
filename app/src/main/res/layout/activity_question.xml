@@ -8,25 +8,39 @@
     tools:context=".activities.QuestionActivity"
     android:orientation="vertical">
   <LinearLayout
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:gravity="center"
+      android:gravity="left"
       android:layout_marginTop="8dp"
       android:layout_marginHorizontal="8dp">
       <ImageView
           android:layout_width="50dp"
           android:layout_height="25dp"
           app:srcCompat="@drawable/logo"
-          app:tint="@color/primary" />
+          app:tint="@color/primary"
+          android:layout_gravity="center"/>
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="SLAMS"
           android:textStyle="bold"
-          android:gravity="center"
+          android:layout_gravity="center"
           android:textSize="20sp"
-          android:layout_marginStart="16dp"/>
+          android:layout_marginStart="16dp"
+          android:layout_weight="9"/>
+
+      <ImageButton
+          android:id="@+id/explore_users"
+          android:layout_width="30dp"
+          android:layout_height="40dp"
+          android:layout_weight="1"
+          android:backgroundTintMode="screen"
+          android:contentDescription="Explore"
+          android:gravity="end"
+          app:srcCompat="@drawable/ic_outline_explore"
+          app:tint="@color/primary"
+          tools:ignore="TouchTargetSizeCheck" />
   </LinearLayout>
   <androidx.recyclerview.widget.RecyclerView
       android:layout_width="match_parent"
