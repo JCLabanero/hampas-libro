@@ -6,17 +6,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.AnswersActivity">
-
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        app:srcCompat="@drawable/logo"
+        app:tint="@color/primary"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
     <TextView
         android:id="@+id/textViewQuestion"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Who is your crush?"
+        android:gravity="center"
         android:textStyle="bold"
-        android:paddingHorizontal="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"/>
-
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -24,7 +30,6 @@
         android:layout_weight="8"
         android:paddingHorizontal="8dp"
         android:paddingTop="8dp" />
-
     <Button
         android:id="@+id/buttonAdd"
         android:layout_width="match_parent"

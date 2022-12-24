@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         init();
         ConstraintLayout resigterAct = findViewById(R.id.registerAct);
         AnimationDrawable anim = (AnimationDrawable) resigterAct.getBackground();
-        anim.setEnterFadeDuration(5000);
+        anim.setEnterFadeDuration(1000);
         anim.setExitFadeDuration(5000);
         anim.start();
 
