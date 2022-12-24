@@ -67,17 +67,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }//For updating table, drop the first table then auto create the updated one VERSION=2
 
-    public boolean insertAnswer(String answer, Integer id){
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DB_Contract.Answer.ANSWER, answer);
-        values.put(DB_Contract.Answer.QUESTION_ID,id);
-
-        long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
-        return result!=-1;
-    }
-
+//QUESTIONS
     public boolean insertQuestion(String question, Integer id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -87,8 +77,104 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
         return result != -1;
-    }
+    }//ADD A QUESTION
+    public Cursor selectAllQuestionOfUserID(String user_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Question.USER_ID+"=?";
+        String[] selectionArgs = {user_id};
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }//BUFFER
+    public Cursor selectQuestionByID(String ID){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Question.ID+"=?";
+        String[] selectionArgs = {ID};
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }//BUFFER
+    public Cursor selectAllQuestion() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        return result;
+    }//BUFFER ALL QUESTION
+    public boolean deleteQuestion(String ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = DB_Contract.Question.ID+"=?";
+        String[] selectionArgs = {ID};
+        int affected = db.delete(DB_Contract.Question.QUESTION_TABLE,selection,selectionArgs);
+        return affected > 0;
+    }//DELETE
+//ANSWER
+    public boolean insertAnswer(String answer, Integer id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(DB_Contract.Answer.ANSWER, answer);
+        values.put(DB_Contract.Answer.QUESTION_ID,id);
+
+        long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
+        return result!=-1;
+    }//ADD ANSWER
+    public Cursor selectAllAnswerOfQuestionID(String valueOf) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = DB_Contract.Answer.QUESTION_ID+"=?";
+        String[] selectionArgs = {valueOf};
+        Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }//BUFFER
+    public Cursor selectAllAnswer(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        return result;
+    }//BUFFER FOR EVERYTHING
+    public boolean deleteAnswer(String ID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = DB_Contract.Answer.ID+"=?";
+        String[] selectionArgs = {ID};
+        int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
+        return affected>0;
+    }//DELETE ANSWER BY ID
+    public boolean deleteByRowNumber(String rowNumber){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = DB_Contract.Answer._COUNT+"=?";
+        String[] selectionArgs = {rowNumber};
+        int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
+        return affected>0;
+    }//DELETE NOT WORKING
+//USER
     public boolean insertIntoUserTable(String name, String username, String password){
         SQLiteDatabase sqliteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -99,82 +185,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         long result = sqliteDatabase.insert(DB_Contract.User.USER_TABLE,null, values);
         return result != -1;
-    }
-    public Cursor selectAllAnswer(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query(DB_Contract.Answer.ANSWER_TABLE,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-        return result;
-    }
-
-    public Cursor selectAllQuestion() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-        return result;
-    }
-    public Cursor selectAllQuestionOfUserID(String user_id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String[] columnsNeeded = {
-                DB_Contract.Question.ID,
-                DB_Contract.Question.QUESTION,
-                DB_Contract.Question.USER_ID
-        };
-        String selection = DB_Contract.Question.USER_ID+"=?";
-        String[] selectionArgs = {user_id};
-        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
-                columnsNeeded,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-                );
-        return result;
-    }
-
-    public Cursor selectAllUser() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query(DB_Contract.User.USER_TABLE,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-        return result;
-    }
-
-    public Cursor selectUserByUsername(String username) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columnsNeeded = {
-                DB_Contract.User.ID,
-                DB_Contract.User.COMPLETE_NAME,
-                DB_Contract.User.USERNAME,
-                DB_Contract.User.PASSWORD
-        };
-        String selection = DB_Contract.User.USERNAME+" = ?";
-        String[] selectionArgs = {username};
-        Cursor result = db.query(DB_Contract.User.USER_TABLE,
-                columnsNeeded,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null);
-        return result;
-    }
-
+    }//ADD A USER
     public Cursor selectUserByIDOrName(String ID, String complete_name){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnsNeeded = {
@@ -182,7 +193,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 DB_Contract.User.COMPLETE_NAME,
                 DB_Contract.User.USERNAME,
                 DB_Contract.User.PASSWORD
-        }; // SELECT * FROM 'table_user' WHERE 'id' = ? OR 'complete_name' LIKE ?
+        };// SELECT * FROM 'table_user' WHERE 'id' = ? OR 'complete_name' LIKE ?
         String selection = DB_Contract.User.ID+" = ? OR "+// = ? AND
                 DB_Contract.User.COMPLETE_NAME+" LIKE ?";
         String[] selectionArgs = {ID,"%"+complete_name+"%"};
@@ -197,49 +208,36 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 null,
                 orderBy);
         return result;
-    }
-    public Boolean updateUser(String ID, String name, String username, String password){
+    }//SELECT ID OR NAME
+    public Cursor selectUserByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columnsNeeded = {DB_Contract.User.ID, DB_Contract.User.COMPLETE_NAME, DB_Contract.User.USERNAME, DB_Contract.User.PASSWORD};
+        String selection = DB_Contract.User.USERNAME + " = ?";
+        String[] selectionArgs = {username};
+        Cursor result = db.query(DB_Contract.User.USER_TABLE, columnsNeeded, selection, selectionArgs, null, null, null);
+        return result;
+    }//SELECT USERNAME
+    public Cursor selectAllUser() {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-
-        values.put(DB_Contract.User.COMPLETE_NAME,name);
-        values.put(DB_Contract.User.USERNAME,username);
-        values.put(DB_Contract.User.PASSWORD,password);
-
-        String selection = DB_Contract.User.ID+" = ? ";
-        String[] selectionArgs = {ID};
-
-        int affected = db.update(DB_Contract.User.USER_TABLE,values,selection,selectionArgs);
-
-        return affected > 0;
-    }
-    public boolean deleteByRowNumber(String rowNumber){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selection = DB_Contract.Answer._COUNT+"=?";
-        String[] selectionArgs = {rowNumber};
-        int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
-        return affected>0;
-    }
-    public boolean deleteAnswer(String ID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selection = DB_Contract.Answer.ID+"=?";
-        String[] selectionArgs = {ID};
-        int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
-        return affected>0;
-    }
-    public boolean deleteQuestion(String ID){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selection = DB_Contract.Question.ID+"=?";
-        String[] selectionArgs = {ID};
-        int affected = db.delete(DB_Contract.Question.QUESTION_TABLE,selection,selectionArgs);
-        return affected > 0;
-    }
+        Cursor result = db.query(DB_Contract.User.USER_TABLE, null, null, null, null, null, null);
+        return result;
+    }//SELECT ALL USER
     public Boolean deleteUser(String ID){
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = DB_Contract.User.ID+" = ? ";
         String[] selectionArgs = {ID};
         int affected = db.delete(DB_Contract.User.USER_TABLE,selection,selectionArgs);
         return affected > 0;
-    }
+    }//DELETE USER BY ID SAMPLE
+    public Boolean updateUser(String ID, String name, String username, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DB_Contract.User.COMPLETE_NAME, name);
+        values.put(DB_Contract.User.USERNAME, username);
+        values.put(DB_Contract.User.PASSWORD, password);
+        String selection = DB_Contract.User.ID + " = ? ";
+        String[] selectionArgs = {ID};
+        int affected = db.update(DB_Contract.User.USER_TABLE, values, selection, selectionArgs);
+        return affected > 0;
+    }//UPDATE USER DATA SAMPLE
 }

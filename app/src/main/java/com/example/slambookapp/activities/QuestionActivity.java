@@ -1,6 +1,5 @@
 package com.example.slambookapp.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +39,7 @@ public class QuestionActivity extends AppCompatActivity {
             "Something you like in me?",
             "Something you like in me?"};
     SQLiteDBHelper database;
+    int questionID;
     int userID;
 
     @Override
@@ -68,25 +68,22 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int rand = (int) (Math.random() * questions.length);
                 insertNewQuestion(rand);
-                contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[rand]));
-                recyclerAdapter.notifyItemInserted(0);
-                layoutManager.scrollToPosition(0);
             }
         });
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForQuestions.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(context,AnswersActivity.class);
-                intent.putExtra("question", contentQuestionsList.get(position).getQuestion());
-                intent.putExtra("user_id", userID);
-                intent.putExtra("question_id","");
-                startActivity(intent);
+                openQuestion(String.valueOf(position));
+//                openQuestion(contentQuestionsList.get(position).getQuestion());
             }
         });
     }
 
-    private void insertNewQuestion(Integer rand) {
+    private void insertNewQuestion(int rand) {
         if(database.insertQuestion(questions[rand], userID)){
+            contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[rand]));
+            recyclerAdapter.notifyItemInserted(0);
+            layoutManager.scrollToPosition(0);
             Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(context, "question adding failed", Toast.LENGTH_SHORT).show();
     }
@@ -95,5 +92,27 @@ public class QuestionActivity extends AppCompatActivity {
         Cursor result = database.selectAllQuestionOfUserID(String.valueOf(userID));
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         else{while (result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1)));}
+    }
+    private void openQuestion(String input){
+        Cursor result = database.selectQuestionByID(input);
+        if(result.getCount()==0){
+            Toast.makeText(context, "question doesn't exist", Toast.LENGTH_SHORT).show();
+        } else {
+            while (result.moveToNext()){
+//                result.getString(0);//id
+//                result.getString(1);//content
+//                result.getString(2);//
+                startIntent(result.getString(0),result.getString(1),result.getString(2));
+//                if(input.matches(result.getString(1)))
+//                    questionID = Integer.parseInt(result.getString(1));
+            }
+        }
+    }
+    private void startIntent(String uno, String dos, String tres){
+        Intent intent = new Intent(context, AnswersActivity.class);
+        intent.putExtra("id",uno);
+        intent.putExtra("question",dos);
+        intent.putExtra("question_id", tres);
+        startActivity(intent);
     }
 }

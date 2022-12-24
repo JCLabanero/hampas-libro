@@ -28,9 +28,10 @@ public class AnswersActivity extends AppCompatActivity {
     RecyclerViewAdapterForAnswers recyclerAdapter; //adapter that holds our design
     TextView question;
     Button buttonAdd;
-    Context context = this;
+    Context context;
     ArrayList<ContentAnswers> contentAnswersList = new ArrayList<>();
     int userID;
+    int questionID;
     SQLiteDBHelper database;
 
     @Override
@@ -41,12 +42,15 @@ public class AnswersActivity extends AppCompatActivity {
     }
 
     public void init() {
+        context = this;
         database = new SQLiteDBHelper(context);
         question = findViewById(R.id.textViewQuestion);
+
         Intent intent = getIntent();
-        userID = intent.getIntExtra("user_id",0);
+        userID = intent.getIntExtra("question_id",0);
+        questionID = intent.getIntExtra("id",0);
         question.setText(intent.getStringExtra("question"));
-        retrieveAnswer();
+//        retrieveAnswer();
 
         recyclerView1 = findViewById(R.id.recyclerView);
         recyclerView1.hasFixedSize();
@@ -75,11 +79,7 @@ public class AnswersActivity extends AppCompatActivity {
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
-                                deleteAnswer(position);
-                                contentAnswersList.remove(position);
-                                recyclerAdapter.notifyItemRemoved(position);
-                                layoutManager.scrollToPosition(position);
-                                Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
+//                                deleteAnswer(position,contentAnswersList.get(position).getAnswer());
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -93,22 +93,25 @@ public class AnswersActivity extends AppCompatActivity {
     }
 
     private void insertNewAnswer() {
-        if(database.insertAnswer("Hey",userID)){
+        if(database.insertAnswer("Hey"+Math.random(),userID)){
             contentAnswersList.add(0, new ContentAnswers(R.drawable.ic_launcher_foreground,"new","new"));
             recyclerAdapter.notifyItemInserted(0);
             layoutManager.scrollToPosition(0);
-            Toast.makeText(context, "new slam added", Toast.LENGTH_SHORT).show();
             Toast.makeText(context, "new answer added", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(context, "answer adding failed", Toast.LENGTH_SHORT).show();
     }
     private void retrieveAnswer(){
-        Cursor result = database.selectAllAnswer();
+        Cursor result = database.selectAllAnswerOfQuestionID(String.valueOf(questionID));
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         else {while(result.moveToNext()) contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1),"null"));}
     }
-    private void deleteAnswer(int rowNumber){
-        if(database.deleteByRowNumber(String.valueOf(rowNumber))){
+    /*private void deleteAnswer(int input, String answer){
+        if(database.deleteAnswerByContent(answer)){
             Toast.makeText(context, "deleted successfully", Toast.LENGTH_SHORT).show();
+            contentAnswersList.remove(input);
+            recyclerAdapter.notifyItemRemoved(input);
+            layoutManager.scrollToPosition(input);
+            Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
         } else Toast.makeText(context, "delete failed", Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }
