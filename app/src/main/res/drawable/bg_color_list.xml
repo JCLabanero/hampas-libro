@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:drawable="@drawable/bg_three" android:duration="7000"/>
+<item android:drawable="@drawable/bg_two" android:duration="6000"/>
+<item android:drawable="@drawable/bg_one" android:duration="5000"/>
+<item android:drawable="@drawable/bg_four" android:duration="6000"/>
+</animation-list>

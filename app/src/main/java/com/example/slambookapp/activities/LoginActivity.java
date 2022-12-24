@@ -1,10 +1,12 @@
 package com.example.slambookapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +30,12 @@ public class LoginActivity extends AppCompatActivity {
 
         context = this;
 
-        text = findViewById(R.id.welcome);
+        ConstraintLayout actLayout = findViewById(R.id.loginAct);
+        AnimationDrawable anim = (AnimationDrawable) actLayout.getBackground();
+        anim.setEnterFadeDuration(1000);
+        anim.setExitFadeDuration(5000);
+        anim.start();
+
         View layout = findViewById(R.id.linearLayout3);
         username = findViewById(R.id.editTextEmailAddress);
         password = findViewById(R.id.editTextPassword);
