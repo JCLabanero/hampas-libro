@@ -1,8 +1,10 @@
 package com.example.slambookapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         init();
+        ConstraintLayout resigterAct = findViewById(R.id.registerAct);
+        AnimationDrawable anim = (AnimationDrawable) resigterAct.getBackground();
+        anim.setEnterFadeDuration(5000);
+        anim.setExitFadeDuration(5000);
+        anim.start();
+
         database = new SQLiteDBHelper(context);
         signUp.setOnClickListener(clickHandler);
         login.setOnClickListener(clickHandler);
