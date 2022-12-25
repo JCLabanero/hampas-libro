@@ -60,7 +60,7 @@ public class QuestionActivity extends AppCompatActivity {
         userID = intent.getIntExtra("Key", 0);
         otherID = intent.getIntExtra("KeyOrigUser",0);
         forOther = intent.getIntExtra("forOther", 0) != 0;
-        if(userID!=otherID) swap(userID,otherID);
+        if(userID!=otherID&&otherID!=0) swap(userID,otherID);
 
         retrieveQuestion();
         recyclerView = findViewById(R.id.recyclerViewQuestions);
@@ -104,7 +104,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void insertNewQuestion(int rand) {
         if(database.insertQuestion(questions[rand], userID)){
-            contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_foreground,questions[rand]));
+            contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_background,questions[rand]));
             recyclerAdapter.notifyItemInserted(0);
             layoutManager.scrollToPosition(0);
             Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
@@ -118,11 +118,12 @@ public class QuestionActivity extends AppCompatActivity {
     }
     private void openQuestion(String input){
         Cursor result = database.selectQuestionByID(input);
+//        Cursor result = database.selectQuestionByUserAndQuestionID(String.valueOf(userID),input);
         if(result.getCount()==0){
             Toast.makeText(context, "question doesn't exist", Toast.LENGTH_SHORT).show();
         } else {
             while (result.moveToNext()){
-                startIntent(result.getString(0),result.getString(1), String.valueOf(userID));
+                startIntent(result.getString(0),result.getString(1), result.getString(2));
             }
         }
     }
@@ -130,7 +131,8 @@ public class QuestionActivity extends AppCompatActivity {
         Intent intent = new Intent(context, AnswersActivity.class);
         intent.putExtra("ID",Integer.parseInt(uno));
         intent.putExtra("question",dos);
-        intent.putExtra("user_id", Integer.parseInt(tres));
+        intent.putExtra("user_id_owner", Integer.parseInt(tres));
+        intent.putExtra("user_id_to_answer",userID);
         startActivity(intent);
     }
 }

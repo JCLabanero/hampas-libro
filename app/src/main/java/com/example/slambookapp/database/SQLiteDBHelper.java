@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 14;
+    private static int VERSION = 15;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -41,6 +41,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'"+DB_Contract.Answer.ANSWER +"' TEXT NOT NULL," +
                 "'"+DB_Contract.Answer.QUESTION_ID+"' INTEGER NOT NULL," +
                 "'"+DB_Contract.Answer.USER_ID+"' INTEGER NOT NULL,"+
+                "'"+DB_Contract.Answer.USER_ID_WHO_ANSWER+"' INTEGER NOT NULL,"+
 //                " FOREIGN KEY ('"+DB_Contract.Answer.USER_ID+"') REFERENCES " +
 //                "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON UPDATE NO ACTION,"+
                 " FOREIGN KEY ('"+DB_Contract.Answer.QUESTION_ID+"') REFERENCES " +
@@ -78,6 +79,20 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
         return result != -1;
     }//ADD A QUESTION
+    public Cursor selectQuestionByUserAndQuestionID(String user_id,String question_id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Question.USER_ID+" = ? AND " + DB_Contract.Question.ID+" LIKE ? ";
+        String[] selectionArgs = {user_id,question_id};
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }
     public Cursor selectQuestionByUserID(String user_id){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.USER_ID+"=?";
@@ -125,6 +140,18 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return affected > 0;
     }//DELETE
 //ANSWER
+    public boolean insertForeignAnswer(String answer, Integer id, Integer user_id, Integer user_id_who_answer){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DB_Contract.Answer.ANSWER, answer);
+        values.put(DB_Contract.Answer.QUESTION_ID,id);
+        values.put(DB_Contract.Answer.USER_ID, user_id);
+        values.put(DB_Contract.Answer.USER_ID_WHO_ANSWER, user_id_who_answer);
+
+        long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
+        return result!=-1;
+    }
     public boolean insertAnswer(String answer, Integer id, Integer user_id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -136,7 +163,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
         return result!=-1;
     }//ADD ANSWER
-    public Cursor selectAnswerOfQuestionIDAndUserID(String valueOf, String valueOf1) {
+    public Cursor selectAnswerByQuestionIDAndUserID(String valueOf, String valueOf1) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Answer.QUESTION_ID+" = ? AND " + DB_Contract.Answer.USER_ID+" LIKE ? ";
         String[] selectionArgs = {valueOf,valueOf1};
