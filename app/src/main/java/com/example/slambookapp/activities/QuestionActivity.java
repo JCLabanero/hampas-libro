@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.slambookapp.R;
@@ -24,6 +25,7 @@ public class QuestionActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
     RecyclerViewAdapterForQuestions recyclerAdapter;
     Button buttonAddRandomQuestion;
+    ImageButton buttonOpenUserActivity;
     Context context;
     ArrayList<ContentQuestions>  contentQuestionsList = new ArrayList<>();
     String[] questions = {"Who is your secret crush?",
@@ -62,6 +64,7 @@ public class QuestionActivity extends AppCompatActivity {
         recyclerAdapter = new RecyclerViewAdapterForQuestions(context, R.layout.row_slam_questions, contentQuestionsList);
         recyclerView.setAdapter(recyclerAdapter);
 
+        buttonOpenUserActivity = findViewById(R.id.explore_users);
         buttonAddRandomQuestion = findViewById(R.id.buttonAddQuestion);
         buttonAddRandomQuestion.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -70,11 +73,17 @@ public class QuestionActivity extends AppCompatActivity {
                 insertNewQuestion(rand);
             }
         });
+        buttonOpenUserActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, UserActivity.class);
+                startActivity(i);
+            }
+        });
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForQuestions.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 openQuestion(String.valueOf((position+1)));
-//                openQuestion(contentQuestionsList.get(position).getQuestion());
             }
         });
     }

@@ -3,10 +3,10 @@ package com.example.slambookapp.classes;
 public class ContentUsers {
     private int image;
     private String username;
-    private int id;
+    private String id;
     private String email;
 
-    public ContentUsers(int image, String username, int id, String email) {
+    public ContentUsers(int image, String username, String id, String email) {
         this.image = image;
         this.username = username;
         this.id = id;
@@ -29,11 +29,7 @@ public class ContentUsers {
         this.username = username;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,5 +39,9 @@ public class ContentUsers {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getId() {
+        return id;
     }
 }

@@ -19,7 +19,7 @@
           android:layout_height="25dp"
           app:srcCompat="@drawable/logo"
           app:tint="@color/primary"
-          android:layout_gravity="center"/>
+          android:layout_gravity="top"/>
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -38,9 +38,9 @@
           android:backgroundTintMode="screen"
           android:contentDescription="Explore"
           android:gravity="end"
+          tools:ignore="TouchTargetSizeCheck"
           app:srcCompat="@drawable/ic_outline_explore"
-          app:tint="@color/primary"
-          tools:ignore="TouchTargetSizeCheck" />
+          app:tint="@color/primary" />
   </LinearLayout>
   <androidx.recyclerview.widget.RecyclerView
       android:layout_width="match_parent"

@@ -5,36 +5,34 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginTop="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:padding="8dp"
-    android:id="@+id/layout">
+    android:id="@+id/layout"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="8dp">
     <ImageView
-        android:id="@+id/profile"
+        android:id="@+id/row_users_profile"
         android:layout_width="160dp"
         android:layout_height="160dp"
         tools:srcCompat="@tools:sample/avatars" />
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/row_users_username"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="John Carlo Labanero"
         android:gravity="start"/>
     <TextView
-        android:id="@+id/id"
+        android:id="@+id/row_users_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ID: Their id"/>
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/row_users_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email"/>
     <Button
-        android:id="@+id/button"
+        android:id="@+id/row_users_button"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:text="Answer their slams"
-        android:textSize="7sp"/>
+        android:textSize="12sp"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

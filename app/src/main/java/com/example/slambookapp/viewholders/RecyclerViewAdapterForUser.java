@@ -34,8 +34,7 @@ public class RecyclerViewAdapterForUser extends RecyclerView.Adapter<RecyclerVie
     public RecyclerViewAdapterForUser.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View convertView = inflater.inflate(layout,parent,false);
-        ViewHolder viewHolder = new ViewHolder(convertView);
-        return viewHolder;
+        return new ViewHolder(convertView);
     }
 
     @Override
@@ -57,10 +56,10 @@ public class RecyclerViewAdapterForUser extends RecyclerView.Adapter<RecyclerVie
         TextView email;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.image = itemView.findViewById(R.id.profile);
-            this.username = itemView.findViewById(R.id.username);
-            this.id = itemView.findViewById(R.id.id);
-            this.email = itemView.findViewById(R.id.email);
+            this.image = itemView.findViewById(R.id.row_users_profile);
+            this.username = itemView.findViewById(R.id.row_users_username);
+            this.id = itemView.findViewById(R.id.row_users_id);
+            this.email = itemView.findViewById(R.id.row_users_email);
         }
     }
 }
