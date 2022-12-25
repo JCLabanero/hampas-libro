@@ -53,6 +53,7 @@ public class RecyclerViewAdapterForUser extends RecyclerView.Adapter<RecyclerVie
                 Intent intent = new Intent(holder.buttonAnswerUser.getContext(), QuestionActivity.class);
                 intent.putExtra("Key",Integer.parseInt(oneLine.getId()));
                 intent.putExtra("KeyOrigUser",userID);
+                intent.putExtra("forOther",1);
                 holder.buttonAnswerUser.getContext().startActivity(intent);
             }
         });

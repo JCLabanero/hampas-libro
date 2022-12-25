@@ -41,21 +41,27 @@ public class QuestionActivity extends AppCompatActivity {
             "Something you like in me?",
             "Something you like in me?"};
     SQLiteDBHelper database;
-    int questionID;
-    int userID;
+    int userID,otherID;
+    boolean forOther;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         init();
-        Toast.makeText(context, ""+userID, Toast.LENGTH_SHORT).show();
+        if(forOther){ buttonOpenUserActivity.setVisibility(View.GONE);
+            buttonAddRandomQuestion.setVisibility(View.GONE);
+        }else buttonOpenUserActivity.setVisibility(View.VISIBLE);
     }
     public void init() {
         context = this;
         database = new SQLiteDBHelper(context);
         Intent intent = getIntent();
         userID = intent.getIntExtra("Key", 0);
+        otherID = intent.getIntExtra("KeyOrigUser",0);
+        forOther = intent.getIntExtra("forOther", 0) != 0;
+        if(userID!=otherID) swap(userID,otherID);
+
         retrieveQuestion();
         recyclerView = findViewById(R.id.recyclerViewQuestions);
         recyclerView.hasFixedSize();
@@ -87,6 +93,13 @@ public class QuestionActivity extends AppCompatActivity {
                 openQuestion(String.valueOf((position+1)));
             }
         });
+    }
+
+    private void swap(int userID, int otherID) {
+        int temp = 0;
+        userID = temp;
+        userID = otherID;
+        otherID = temp;
     }
 
     private void insertNewQuestion(int rand) {

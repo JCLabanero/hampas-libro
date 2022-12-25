@@ -30,8 +30,7 @@ public class AnswersActivity extends AppCompatActivity {
     Button buttonAdd;
     Context context;
     ArrayList<ContentAnswers> contentAnswersList = new ArrayList<>();
-    int userID;
-    int questionID;
+    int userID,questionID;
     SQLiteDBHelper database;
 
     @Override

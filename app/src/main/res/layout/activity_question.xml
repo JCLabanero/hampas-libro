@@ -38,9 +38,9 @@
           android:backgroundTintMode="screen"
           android:contentDescription="Explore"
           android:gravity="end"
-          tools:ignore="TouchTargetSizeCheck"
           app:srcCompat="@drawable/ic_outline_explore"
-          app:tint="@color/primary" />
+          app:tint="@color/primary"
+          tools:ignore="TouchTargetSizeCheck" />
   </LinearLayout>
   <androidx.recyclerview.widget.RecyclerView
       android:layout_width="match_parent"
