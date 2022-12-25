@@ -245,6 +245,13 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         Cursor result = db.query(DB_Contract.User.USER_TABLE,null,selection,selectionArgs,null,null,null);
         return result;
     }
+    public Cursor selectUserByID(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.User.ID+" = ?";
+        String[] selectionArgs = {id};
+        Cursor result = db.query(DB_Contract.User.USER_TABLE,null,selection,selectionArgs,null,null,null);
+        return result;
+    }
     public Cursor selectUserByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnsNeeded = {DB_Contract.User.ID, DB_Contract.User.COMPLETE_NAME, DB_Contract.User.USERNAME, DB_Contract.User.PASSWORD};

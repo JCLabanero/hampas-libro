@@ -103,6 +103,17 @@ public class AnswersActivity extends AppCompatActivity {
     private void retrieveAnswer(){
         Cursor result = database.selectAnswerOfQuestionIDAndUserID(String.valueOf(questionID),String.valueOf(userID));
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
-        else {while(result.moveToNext()) contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1), result.getString(3)));}
+        else {
+            while(result.moveToNext())
+                contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1), returnUsername(result.getString(3))));
+        }
+    }
+    private String returnUsername(String id){
+        Cursor result = database.selectUserByID(id);
+        if(result.getCount()!=0){
+            result.moveToNext();
+            return result.getString(1);
+        }
+        return id;
     }
 }
