@@ -11,6 +11,7 @@
     <string name="create_account">Create account with</string>
     <string name="full_name">Full Name</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="row_users_id">ID: Their id</string>
 
     <string-array name="questions_array">
         <item>Who is your crush?</item>

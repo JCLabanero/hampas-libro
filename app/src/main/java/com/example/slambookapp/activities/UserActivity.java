@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.slambookapp.R;
@@ -24,8 +26,7 @@ public class UserActivity extends AppCompatActivity {
     Context context;
     ArrayList<ContentUsers>  contentUsersList = new ArrayList<>();
     SQLiteDBHelper database;
-    int questionID;
-    int userID;
+    int questionID,userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,15 @@ public class UserActivity extends AppCompatActivity {
         recyclerView.hasFixedSize();
         layoutManager = new GridLayoutManager(context,2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerAdapter = new RecyclerViewAdapterForUser(context,R.layout.row_users,contentUsersList);
+        recyclerAdapter = new RecyclerViewAdapterForUser(context,R.layout.row_users,contentUsersList,userID);
         recyclerView.setAdapter(recyclerAdapter);
+//        button = findViewById(R.id.row_users_button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, "Work", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
     private void retrieveUsers(){
         Cursor result = database.selectUserAndDisregard(String.valueOf(userID));

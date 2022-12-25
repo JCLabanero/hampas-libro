@@ -48,8 +48,8 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-
         init();
+        Toast.makeText(context, ""+userID, Toast.LENGTH_SHORT).show();
     }
     public void init() {
         context = this;

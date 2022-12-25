@@ -23,7 +23,7 @@
         android:id="@+id/row_users_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID: Their id"/>
+        android:text="@string/row_users_id"/>
     <TextView
         android:id="@+id/row_users_email"
         android:layout_width="wrap_content"
