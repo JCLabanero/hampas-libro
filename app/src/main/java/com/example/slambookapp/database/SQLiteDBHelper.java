@@ -238,11 +238,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 orderBy);
         return result;
     }//BUFFER ID OR NAME
-    public Cursor selectUserAndDisregard(String id, String valueOf){
+    public Cursor selectUserAndDisregard(String valueOf){
         SQLiteDatabase db = this.getReadableDatabase();
-        String selection = DB_Contract.User.ID + " = ? AND "+
-                DB_Contract.User.ID+ " NOT LIKE ? ";
-        String[] selectionArgs = {id,valueOf};
+        String selection = DB_Contract.User.ID + " != ? ";
+        String[] selectionArgs = {valueOf};
         Cursor result = db.query(DB_Contract.User.USER_TABLE,null,selection,selectionArgs,null,null,null);
         return result;
     }
