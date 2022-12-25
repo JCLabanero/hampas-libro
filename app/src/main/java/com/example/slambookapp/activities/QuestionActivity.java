@@ -77,6 +77,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, UserActivity.class);
+                i.putExtra("id",userID);
                 startActivity(i);
             }
         });

@@ -198,7 +198,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     }//DELETE ANSWER BY ID
     public boolean deleteByRowNumber(String rowNumber){
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = DB_Contract.Answer._COUNT+"=?";
+        String selection = DB_Contract.Answer._COUNT+" = ?";
         String[] selectionArgs = {rowNumber};
         int affected = db.delete(DB_Contract.Answer.ANSWER_TABLE,selection,selectionArgs);
         return affected>0;
@@ -237,7 +237,15 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 null,
                 orderBy);
         return result;
-    }//SELECT ID OR NAME
+    }//BUFFER ID OR NAME
+    public Cursor selectUserAndDisregard(String id, String valueOf){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.User.ID + " = ? AND "+
+                DB_Contract.User.ID+ " NOT LIKE ? ";
+        String[] selectionArgs = {id,valueOf};
+        Cursor result = db.query(DB_Contract.User.USER_TABLE,null,selection,selectionArgs,null,null,null);
+        return result;
+    }
     public Cursor selectUserByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columnsNeeded = {DB_Contract.User.ID, DB_Contract.User.COMPLETE_NAME, DB_Contract.User.USERNAME, DB_Contract.User.PASSWORD};
@@ -245,12 +253,12 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {username};
         Cursor result = db.query(DB_Contract.User.USER_TABLE, columnsNeeded, selection, selectionArgs, null, null, null);
         return result;
-    }//SELECT USERNAME
+    }//BUFFER USERNAME
     public Cursor selectAllUser() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.query(DB_Contract.User.USER_TABLE, null, null, null, null, null, null);
         return result;
-    }//SELECT ALL USER
+    }//BUFFER ALL USER
     public Boolean deleteUser(String ID){
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = DB_Contract.User.ID+" = ? ";

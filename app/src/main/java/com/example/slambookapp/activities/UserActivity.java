@@ -34,8 +34,8 @@ public class UserActivity extends AppCompatActivity {
     public void init() {
         context = this;
 //        database = new SQLiteDBHelper(context);
-//        Intent intent = getIntent();
-//        userID = intent.getIntExtra("Key", 0);
+        Intent intent = getIntent();
+        userID = intent.getIntExtra("id", 0);
 //        retrieveQuestion();
         contentUsersList.add(new ContentUsers(R.drawable.ic_launcher_background,"username","id","email"));
         contentUsersList.add(new ContentUsers(R.drawable.ic_launcher_background,"username","id","email"));
