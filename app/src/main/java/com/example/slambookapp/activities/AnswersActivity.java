@@ -10,8 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +74,7 @@ public class AnswersActivity extends AppCompatActivity {
         recyclerAdapter.setCustomOnItemClickListener(new RecyclerViewAdapterForAnswers.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(int position) {
+
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
                 alertBuilder.setTitle("Warning!")
                         .setMessage("Confirm delete?")
@@ -93,14 +96,29 @@ public class AnswersActivity extends AppCompatActivity {
     }
 
     private void insertNewAnswer() {
-        String ans = "My " + Math.random();
-        int whereToAdd = recyclerAdapter.getItemCount();
-        if(database.insertForeignAnswer(ans,questionID,userID,userToAnswer)){
-            contentAnswersList.add(whereToAdd, new ContentAnswers(R.drawable.ic_launcher_background,ans,returnUsername(String.valueOf(userToAnswer))));
-            recyclerAdapter.notifyItemInserted(whereToAdd);
-            layoutManager.scrollToPosition(whereToAdd);
-            Toast.makeText(context, "new answer added", Toast.LENGTH_SHORT).show();
-        }else Toast.makeText(context, "answer adding failed", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder answerDialog = new AlertDialog.Builder(context);
+        final EditText answerInput = new EditText(this);
+        answerInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        answerDialog.setTitle("Enter Answer");
+        answerDialog.setView(answerInput);
+        answerDialog.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String ans = answerInput.getText().toString();
+                int whereToAdd = recyclerAdapter.getItemCount();
+                if(database.insertForeignAnswer(ans,questionID,userID,userToAnswer)){
+                    contentAnswersList.add(whereToAdd, new ContentAnswers(R.drawable.ic_launcher_background,ans,returnUsername(String.valueOf(userToAnswer))));
+                    recyclerAdapter.notifyItemInserted(whereToAdd);
+                    layoutManager.scrollToPosition(whereToAdd);
+                    Toast.makeText(context, "new answer added", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(context, "answer adding failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        answerDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {dialogInterface.cancel();}
+        });
+        answerDialog.show();
     }
     private void retrieveAnswer(){
         Cursor result = database.selectAnswerByQuestionIDAndUserID(String.valueOf(questionID),String.valueOf(userID));

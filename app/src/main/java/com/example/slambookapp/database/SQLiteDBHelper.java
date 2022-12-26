@@ -95,6 +95,15 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         );
         return result;
     }//BUFFER QUESTION BY USER AND QUESTION ID
+    public Boolean updateQuestionRow(String user_id, String question_id,String counter){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DB_Contract.Question.QUESTION_ROW,counter);
+        String selection = DB_Contract.Question.USER_ID + " = ? AND " + DB_Contract.Question.ID;
+        String[] selectionArgs = {user_id,question_id};
+        int affected = db.update(DB_Contract.User.USER_TABLE, values, selection, selectionArgs);
+        return affected > 0;
+    }//UPDATE USER DATA SAMPLE
     public Cursor selectQuestionByUserID(String user_id){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.USER_ID+"=?";
