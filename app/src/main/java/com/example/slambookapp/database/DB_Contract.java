@@ -16,6 +16,7 @@ public class DB_Contract {
         public static String QUESTION_TABLE = "question_table";
         public static String ID = "question_id";
         public static String QUESTION = "question";
+        public static String QUESTION_ROW = "question_row";
         public static String USER_ID = "user_id";
     }
     public static class Answer implements BaseColumns {

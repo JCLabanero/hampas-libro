@@ -42,7 +42,6 @@ public class RecyclerViewAdapterForQuestions extends RecyclerView.Adapter<Recycl
         holder.image.setImageResource(oneLine.getImage());
         holder.question.setText(oneLine.getQuestion());
     }
-
     @Override
     public int getItemCount() {return contentQuestionsList.size();}
 

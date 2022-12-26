@@ -60,8 +60,9 @@ public class QuestionActivity extends AppCompatActivity {
         userID = intent.getIntExtra("Key", 0);
         otherID = intent.getIntExtra("KeyOrigUser",0);
         forOther = intent.getIntExtra("forOther", 0) != 0;
-        if(userID!=otherID&&otherID!=0) swap(userID,otherID);
-
+        Toast.makeText(context, userID+"&"+otherID, Toast.LENGTH_SHORT).show();
+//        if(userID!=otherID&&otherID!=0) swap(userID,otherID);
+        if(otherID==0) otherID=userID;
         retrieveQuestion();
         recyclerView = findViewById(R.id.recyclerViewQuestions);
         recyclerView.hasFixedSize();
@@ -103,10 +104,11 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void insertNewQuestion(int rand) {
+        int whereToAdd = recyclerAdapter.getItemCount();
         if(database.insertQuestion(questions[rand], userID)){
-            contentQuestionsList.add(0, new ContentQuestions(R.drawable.ic_launcher_background,questions[rand]));
-            recyclerAdapter.notifyItemInserted(0);
-            layoutManager.scrollToPosition(0);
+            contentQuestionsList.add(whereToAdd, new ContentQuestions(R.drawable.ic_launcher_background,questions[rand]));
+            recyclerAdapter.notifyItemInserted(whereToAdd);
+            layoutManager.scrollToPosition(whereToAdd);
             Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(context, "question adding failed", Toast.LENGTH_SHORT).show();
     }
@@ -117,22 +119,22 @@ public class QuestionActivity extends AppCompatActivity {
         else{while (result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1)));}
     }
     private void openQuestion(String input){
-        Cursor result = database.selectQuestionByID(input);
-//        Cursor result = database.selectQuestionByUserAndQuestionID(String.valueOf(userID),input);
+//        Cursor result = database.selectQuestionByID(input);
+        Cursor result = database.selectQuestionByUserAndQuestionID(String.valueOf(userID),input);
         if(result.getCount()==0){
             Toast.makeText(context, "question doesn't exist", Toast.LENGTH_SHORT).show();
         } else {
             while (result.moveToNext()){
-                startIntent(result.getString(0),result.getString(1), result.getString(2));
+                startIntent(result.getString(0),result.getString(1));
             }
         }
     }
-    private void startIntent(String uno, String dos, String tres){
+    private void startIntent(String uno, String dos){
         Intent intent = new Intent(context, AnswersActivity.class);
         intent.putExtra("ID",Integer.parseInt(uno));
         intent.putExtra("question",dos);
-        intent.putExtra("user_id_owner", Integer.parseInt(tres));
-        intent.putExtra("user_id_to_answer",userID);
+        intent.putExtra("user_id_owner", userID);
+        intent.putExtra("user_id_to_answer",otherID);
         startActivity(intent);
     }
 }

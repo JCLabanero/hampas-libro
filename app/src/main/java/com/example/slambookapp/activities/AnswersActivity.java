@@ -94,10 +94,11 @@ public class AnswersActivity extends AppCompatActivity {
 
     private void insertNewAnswer() {
         String ans = "My " + Math.random();
+        int whereToAdd = recyclerAdapter.getItemCount();
         if(database.insertForeignAnswer(ans,questionID,userID,userToAnswer)){
-            contentAnswersList.add(0, new ContentAnswers(R.drawable.ic_launcher_background,ans,returnUsername(String.valueOf(userToAnswer))));
-            recyclerAdapter.notifyItemInserted(0);
-            layoutManager.scrollToPosition(0);
+            contentAnswersList.add(whereToAdd, new ContentAnswers(R.drawable.ic_launcher_background,ans,returnUsername(String.valueOf(userToAnswer))));
+            recyclerAdapter.notifyItemInserted(whereToAdd);
+            layoutManager.scrollToPosition(whereToAdd);
             Toast.makeText(context, "new answer added", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(context, "answer adding failed", Toast.LENGTH_SHORT).show();
     }
@@ -106,7 +107,7 @@ public class AnswersActivity extends AppCompatActivity {
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
         else {
             while(result.moveToNext())
-                contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1), returnUsername(result.getString(3))));
+                contentAnswersList.add(new ContentAnswers(R.drawable.ic_launcher_background,result.getString(1), returnUsername(result.getString(4))));
         }
     }
     private String returnUsername(String id){

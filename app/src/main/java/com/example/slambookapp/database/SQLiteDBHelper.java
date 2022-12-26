@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 15;
+    private static int VERSION = 16;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -33,6 +33,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 "'"+DB_Contract.Question.ID+"' INTEGER PRIMARY KEY," +
                 "'"+DB_Contract.Question.QUESTION +"' TEXT NOT NULL," +
                 "'"+DB_Contract.Question.USER_ID+"' INTEGER NOT NULL," +
+                "'"+DB_Contract.Question.QUESTION_ROW+"' INTEGER NOT NULL," +
                 " FOREIGN KEY ('"+DB_Contract.Question.USER_ID+"') REFERENCES " +
                 "'"+DB_Contract.User.USER_TABLE+"' ('"+DB_Contract.User.ID+"') ON DELETE CASCADE ON UPDATE CASCADE," + // CASCADE not a good practice
                 "UNIQUE ('"+DB_Contract.Question.ID+"') ON CONFLICT ABORT)";
@@ -75,6 +76,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
         values.put(DB_Contract.Question.QUESTION, question);
         values.put(DB_Contract.Question.USER_ID, id);
+        values.put(DB_Contract.Question.QUESTION_ROW, 0);
 
         long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
         return result != -1;
@@ -92,7 +94,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 null
         );
         return result;
-    }
+    }//BUFFER QUESTION BY USER AND QUESTION ID
     public Cursor selectQuestionByUserID(String user_id){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.USER_ID+"=?";
@@ -107,6 +109,14 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         );
         return result;
     }//BUFFER
+    public Cursor selectQuestionByRow(String valueOf){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Question.QUESTION_ROW+" = ? ",
+        orderBy = DB_Contract.Question.QUESTION_ROW+" ASC";
+        String[] selectionArgs = {valueOf};
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,null,selection,selectionArgs,null,null,orderBy);
+        return result;
+    }
     public Cursor selectQuestionByID(String valueOf){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.ID+"=?";
@@ -140,12 +150,12 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return affected > 0;
     }//DELETE
 //ANSWER
-    public boolean insertForeignAnswer(String answer, Integer id, Integer user_id, Integer user_id_who_answer){
+    public boolean insertForeignAnswer(String answer, Integer question_id,Integer user_id, Integer user_id_who_answer){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(DB_Contract.Answer.ANSWER, answer);
-        values.put(DB_Contract.Answer.QUESTION_ID,id);
+        values.put(DB_Contract.Answer.QUESTION_ID, question_id);
         values.put(DB_Contract.Answer.USER_ID, user_id);
         values.put(DB_Contract.Answer.USER_ID_WHO_ANSWER, user_id_who_answer);
 
@@ -157,7 +167,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(DB_Contract.Answer.ANSWER, answer);
-        values.put(DB_Contract.Answer.QUESTION_ID,id);
         values.put(DB_Contract.Answer.USER_ID, user_id);
 
         long result = sqLiteDatabase.insert(DB_Contract.Answer.ANSWER_TABLE,null,values);
@@ -176,7 +185,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 null
         );
         return result;
-    }
+    }//BUFFER ANSWER BY QUESTION AND USER ID
     public Cursor selectAllAnswerOfQuestionID(String valueOf) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Answer.QUESTION_ID+"=?";
