@@ -105,22 +105,27 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void insertNewQuestion(int rand) {
         int whereToAdd = recyclerAdapter.getItemCount();
-        if(database.insertQuestion(questions[rand], userID)){
+        if(database.insertQuestion(questions[rand], userID,whereToAdd+1)){
             contentQuestionsList.add(whereToAdd, new ContentQuestions(R.drawable.ic_launcher_background,questions[rand]));
             recyclerAdapter.notifyItemInserted(whereToAdd);
             layoutManager.scrollToPosition(whereToAdd);
             Toast.makeText(context, "new question added", Toast.LENGTH_SHORT).show();
         }else Toast.makeText(context, "question adding failed", Toast.LENGTH_SHORT).show();
     }
-
     private void retrieveQuestion(){
         Cursor result = database.selectQuestionByUserID(String.valueOf(userID));
+//        Boolean aft = database.updateQuestionRow(String.valueOf(userID));
+//        if(aft) Toast.makeText(context, "", Toast.LENGTH_SHORT).show();
         if(result.getCount()==0) Toast.makeText(context, "no data", Toast.LENGTH_SHORT).show();
-        else{while (result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1)));}
+        else{
+            while (
+                    result.moveToNext()) contentQuestionsList.add(new ContentQuestions(R.drawable.ic_launcher_background,result.getString(1))
+            );
+        }
     }
     private void openQuestion(String input){
 //        Cursor result = database.selectQuestionByID(input);
-        Cursor result = database.selectQuestionByUserAndQuestionID(String.valueOf(userID),input);
+        Cursor result = database.selectQuestionByUserAndRowNumber(String.valueOf(userID),input);
         if(result.getCount()==0){
             Toast.makeText(context, "question doesn't exist", Toast.LENGTH_SHORT).show();
         } else {

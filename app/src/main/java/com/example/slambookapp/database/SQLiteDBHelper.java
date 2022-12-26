@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class SQLiteDBHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "database.db";
-    private static int VERSION = 16;
+    private static int VERSION = 18;
     Context context;
 
     public SQLiteDBHelper(@Nullable Context context) {
@@ -70,13 +70,13 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     }//For updating table, drop the first table then auto create the updated one VERSION=2++
 
 //QUESTIONS
-    public boolean insertQuestion(String question, Integer id){
+    public boolean insertQuestion(String question, Integer id, Integer position){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(DB_Contract.Question.QUESTION, question);
         values.put(DB_Contract.Question.USER_ID, id);
-        values.put(DB_Contract.Question.QUESTION_ROW, 0);
+        values.put(DB_Contract.Question.QUESTION_ROW, position);
 
         long result = sqLiteDatabase.insert(DB_Contract.Question.QUESTION_TABLE,null,values);
         return result != -1;
@@ -95,15 +95,39 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         );
         return result;
     }//BUFFER QUESTION BY USER AND QUESTION ID
-    public Boolean updateQuestionRow(String user_id, String question_id,String counter){
+    public Cursor selectQuestionByUserAndRowNumber(String user_id,String row_number){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = DB_Contract.Question.USER_ID+" = ? AND " + DB_Contract.Question.QUESTION_ROW+" LIKE ? ";
+        String[] selectionArgs = {user_id,row_number};
+        Cursor result = db.query(DB_Contract.Question.QUESTION_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return result;
+    }
+//    public Boolean updateQuestionRow(String user_id, String question_id,String counter){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//        values.put(DB_Contract.Question.QUESTION_ROW,counter);
+//        String selection = DB_Contract.Question.USER_ID + " = AUTOINCREMENT ";
+//        String[] selectionArgs = {user_id};
+//        int affected = db.update(DB_Contract.User.USER_TABLE, values, selection, selectionArgs);
+//        return affected > 0;
+//    }//UPDATE USER DATA SAMPLE
+    public Boolean updateQuestionRow(String user_id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DB_Contract.Question.QUESTION_ROW,counter);
-        String selection = DB_Contract.Question.USER_ID + " = ? AND " + DB_Contract.Question.ID;
-        String[] selectionArgs = {user_id,question_id};
+        String collect="x++";
+        values.put(DB_Contract.Question.QUESTION_ROW, collect);
+        String selection = DB_Contract.User.ID + " = ? ";
+        String[] selectionArgs = {user_id};
         int affected = db.update(DB_Contract.User.USER_TABLE, values, selection, selectionArgs);
         return affected > 0;
-    }//UPDATE USER DATA SAMPLE
+    }
     public Cursor selectQuestionByUserID(String user_id){
         SQLiteDatabase db = this.getReadableDatabase();
         String selection = DB_Contract.Question.USER_ID+"=?";
